@@ -1,0 +1,109 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!-- ========================================== -->
+    <!-- SİSTEM TEPSİSİ VE RADAR MESAJLARI          -->
+    <!-- ========================================== -->
+    <system:String x:Key="MsgTrayIconHover">SiberBelediye Kalkanı&#x0a;Sisteminiz Korunuyor</system:String>
+    <system:String x:Key="MsgTrayOpenUI">Kalkan Arayüzünü Aç</system:String>
+    <system:String x:Key="MsgTrayExit">Korumayı Durdur ve Çıkış Yap</system:String>
+
+    <!-- ========================================== -->
+    <!-- API VE BAĞLANTI MESAJLARI                  -->
+    <!-- ========================================== -->
+    <system:String x:Key="MsgMissingApiTitle">API ANAHTARI EKSİK</system:String>
+    <system:String x:Key="MsgMissingApiDesc">Lütfen sağ üstteki çark (⚙️) ikonuna&#x0a;tıklayarak API anahtarınızı girin.</system:String>
+    <system:String x:Key="MsgVtConnecting">VT Sunucularına Bağlanılıyor...</system:String>
+    <system:String x:Key="MsgApiClean">Temiz: VT Tarafından Onaylandı</system:String>
+    <system:String x:Key="MsgApiUnknown">Uyarı: Veritabanında Kayıt Yok</system:String>
+    <system:String x:Key="MsgConnectionErrorTitle">BAĞLANTI HATASI</system:String>
+    <system:String x:Key="MsgConnectionErrorDesc">API'ye bağlanılamadı. Anahtarınızı&#x0a;kontrol edin veya interneti sınayın.</system:String>
+    <system:String x:Key="MsgApiConnectionLost">Hata: Sunucu Bağlantısı Koptu</system:String>
+    <system:String x:Key="MsgApiErrorException">API Hatası</system:String>
+    <system:String x:Key="MsgApiWaiting">API Bekleniyor (Ayarlardan Girin)</system:String>
+    <system:String x:Key="MsgApiConnected">API Bağlantısı: Devrede</system:String>
+
+    <!-- ========================================== -->
+    <!-- TEHDİT VE GÜVENLİK DURUMU MESAJLARI        -->
+    <!-- ========================================== -->
+    <system:String x:Key="MsgNlpAnalysis">NLP Analizi Yapılıyor...</system:String>
+    <system:String x:Key="MsgApiThreatFound">Kritik: {0} Motor Tehdit Buldu</system:String>
+    <system:String x:Key="MsgVtThreatFoundTitle">TEHDİT TESPİT EDİLDİ!</system:String>
+    <system:String x:Key="MsgThreatDeletedTitle">TEHDİT YOK EDİLDİ!</system:String>
+    <system:String x:Key="MsgThreatDeletedDesc">Zararlı dosya bilgisayarınızdan&#x0a;kalıcı olarak silindi.</system:String>
+    <system:String x:Key="MsgDeleteFailedTitle">SİLME BAŞARISIZ</system:String>
+    <system:String x:Key="MsgDeleteFailedDesc">Dosya silinemedi! Başka bir programda açık olabilir.&#x0a;Hata: {0}</system:String>
+
+    <system:String x:Key="MsgSafeContentTitle">GÜVENLİ İÇERİK</system:String>
+    <system:String x:Key="MsgSafeContentDesc">Temiz. {0} farklı güvenlik motoru&#x0a;tarafından onaylandı.</system:String>
+    <system:String x:Key="SafeContentText">GÜVENLİ İÇERİK</system:String>
+    <system:String x:Key="StatusText">GÜVENLİ İÇERİK</system:String>
+
+    <system:String x:Key="MsgUnknownTitle">BİLİNMEYEN İÇERİK</system:String>
+    <system:String x:Key="MsgUnknownDesc">Bu dosya veya bağlantı veritabanında&#x0a;daha önce hiç taranmamış.</system:String>
+
+    <system:String x:Key="MsgPhishingTitle">OLTALAMA (PHISHING)!</system:String>
+    <system:String x:Key="MsgSuspiciousTextTitle">ŞÜPHELİ METİN</system:String>
+    <system:String x:Key="MsgAnalysisClean">Analiz Temiz (Tehdit Bulunmadı)</system:String>
+    <system:String x:Key="MsgThreatScoreDetails">Tehdit Skoru: {0}/100&#x0a;{1}</system:String>
+    <system:String x:Key="MsgCriticalPhishingRisk">Kritik Uyarı: %{0} Phishing Riski</system:String>
+    <system:String x:Key="MsgWarningSuspiciousContent">Uyarı: %{0} Şüpheli İçerik</system:String>
+
+    <system:String x:Key="MsgAiSafeContentDesc">Yapay Zeka Modeli: Tehdit&#x0a;Tespit Edilmedi.</system:String>
+    <system:String x:Key="MsgAiAccuracy">Aktif - Doğruluk Oranı: %98.1</system:String>
+    <system:String x:Key="ScanDescriptionText">Yapay Zeka Modeli: Tehdit Tespit Edilmedi</system:String>
+    <system:String x:Key="AiEngineTitle">Yapay Zeka (AI) Motoru</system:String>
+    <system:String x:Key="VtShieldTitle">VirusTotal API Kalkanı</system:String>
+
+    <!-- ========================================== -->
+    <!-- İŞLEM VE DOĞRULAMA MESAJLARI               -->
+    <!-- ========================================== -->
+    <system:String x:Key="MsgProcessing">Veriler İşleniyor...</system:String>
+    <system:String x:Key="MsgPleaseWait">Lütfen Bekleyin...</system:String>
+    <system:String x:Key="MsgInvalidTitle">Geçersiz Giriş</system:String>
+    <system:String x:Key="MsgInvalidDesc">Lütfen geçerli bir veri girdiğinizden&#x0a;emin olun.</system:String>
+
+    <!-- ========================================== -->
+    <!-- SİSTEM TEPSİSİ VE RADAR MESAJLARI          -->
+    <!-- ========================================== -->
+    <system:String x:Key="MsgRadarActiveTitle">Radar Aktif</system:String>
+    <system:String x:Key="MsgRadarActiveDesc">İndirilenler klasörü artık gerçek zamanlı izleniyor.</system:String>
+    <system:String x:Key="MsgAutoCaught">🚨 Otomatik Yakalandı: {0}</system:String>
+    <system:String x:Key="MsgNewFileCaughtTitle">Yeni Dosya Yakalandı!</system:String>
+    <system:String x:Key="MsgNewFileCaughtDesc">{0} indirildi ve analize alınıyor...</system:String>
+    <system:String x:Key="MsgShieldActiveTitle">Siber Kalkan Aktif</system:String>
+    <system:String x:Key="MsgShieldActiveDesc">Uygulama arka planda sisteminizi korumaya devam ediyor.</system:String>
+
+    <!-- ========================================== -->
+    <!-- ARAYÜZ ELEMANLARI VE SEKMELER              -->
+    <!-- ========================================== -->
+    <system:String x:Key="TabText">Metin(E-posta)</system:String>
+    <system:String x:Key="TabUrl">Bağlantı (URL)</system:String>
+    <system:String x:Key="TabFile">Dosya Ekle</system:String>
+    <system:String x:Key="ThreatRadar">Tehdit Radarı</system:String>
+    <system:String x:Key="RealTimeReader">İndirilenler Klasörünü Gerçek Zamanlı İzle</system:String>
+    <system:String x:Key="MsgFileDialogTitle">Taranacak Dosyayı Seçin</system:String>
+    <system:String x:Key="MsgFileDialogFilter">Tüm Dosyalar (*.*)|*.*</system:String>
+    <system:String x:Key="MsgFileSelected">Seçilen Dosya: {0}</system:String>
+
+    <!-- ========================================== -->
+    <!-- GİRDİ İPUÇLARI VE YER TUTUCULAR            -->
+    <!-- ========================================== -->
+    <system:String x:Key="TextExampleHint">Örn: Merhaba, yarınki belediye meclis toplantısı gündemi ekte sunulmuştur...</system:String>
+    <system:String x:Key="TextUrlHint">Taranacak Bağlantıyı(URL) Yapıştırın.</system:String>
+    <system:String x:Key="LinkText">https:// (Örn: www.google.com)</system:String>
+    <system:String x:Key="SelectedFileNameText">Sürükleyip Bırakın veya Seçin</system:String>
+
+    <!-- ========================================== -->
+    <!-- BUTONLAR VE EYLEMLER                       -->
+    <!-- ========================================== -->
+    <system:String x:Key="FolderUploadButton">Bilgisayardan Gözat</system:String>
+    <system:String x:Key="DownloadPDF">PDF İndir</system:String>
+    <system:String x:Key="NewScan">Yeni Tarama</system:String>
+    <system:String x:Key="StartScan">Güvenlik Taramasını Başlat</system:String>
+    <system:String x:Key="StartScanText">Güvenlik Taramasını Başlat</system:String>
+    <system:String x:Key="DeleteThreat">Tehdidi Sil</system:String>
+    <system:String x:Key="DeleteThreatText">Tehdidi Sil</system:String>
+
+</ResourceDictionary>

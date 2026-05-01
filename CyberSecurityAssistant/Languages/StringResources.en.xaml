@@ -1,0 +1,109 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!-- ========================================== -->
+    <!-- SYSTEM TRAY & RADAR MESSAGES               -->
+    <!-- ========================================== -->
+    <system:String x:Key="MsgTrayIconHover">Cyber Shield&#x0a;Your System is Protected</system:String>
+    <system:String x:Key="MsgTrayOpenUI">Open Shield Interface</system:String>
+    <system:String x:Key="MsgTrayExit">Stop Protection and Exit</system:String>
+
+    <!-- ========================================== -->
+    <!-- API & CONNECTION MESSAGES                  -->
+    <!-- ========================================== -->
+    <system:String x:Key="MsgMissingApiTitle">MISSING API KEY</system:String>
+    <system:String x:Key="MsgMissingApiDesc">Please click the gear (⚙️) icon at the top right&#x0a;to enter your API key.</system:String>
+    <system:String x:Key="MsgVtConnecting">Connecting to VT Servers...</system:String>
+    <system:String x:Key="MsgApiClean">Clean: Approved by VT</system:String>
+    <system:String x:Key="MsgApiUnknown">Warning: No Record in Database</system:String>
+    <system:String x:Key="MsgConnectionErrorTitle">CONNECTION ERROR</system:String>
+    <system:String x:Key="MsgConnectionErrorDesc">Failed to connect to the API. Check your&#x0a;key or test your internet connection.</system:String>
+    <system:String x:Key="MsgApiConnectionLost">Error: Server Connection Lost</system:String>
+    <system:String x:Key="MsgApiErrorException">API Error</system:String>
+    <system:String x:Key="MsgApiWaiting">Waiting for API (Enter in Settings)</system:String>
+    <system:String x:Key="MsgApiConnected">API Connection: Enabled</system:String>
+
+    <!-- ========================================== -->
+    <!-- THREAT & SECURITY STATUS MESSAGES          -->
+    <!-- ========================================== -->
+    <system:String x:Key="MsgNlpAnalysis">Performing NLP Analysis...</system:String>
+    <system:String x:Key="MsgApiThreatFound">Critical: {0} Engines Detected Threat</system:String>
+    <system:String x:Key="MsgVtThreatFoundTitle">THREAT DETECTED!</system:String>
+    <system:String x:Key="MsgThreatDeletedTitle">THREAT ELIMINATED!</system:String>
+    <system:String x:Key="MsgThreatDeletedDesc">The malicious file has been permanently&#x0a;deleted from your computer.</system:String>
+    <system:String x:Key="MsgDeleteFailedTitle">DELETION FAILED</system:String>
+    <system:String x:Key="MsgDeleteFailedDesc">The file could not be deleted! It might be open in another program.&#x0a;Error: {0}</system:String>
+
+    <system:String x:Key="MsgSafeContentTitle">SAFE CONTENT</system:String>
+    <system:String x:Key="MsgSafeContentDesc">Clean. Approved by {0} different&#x0a;security engines.</system:String>
+    <system:String x:Key="SafeContentText">SAFE CONTENT</system:String>
+    <system:String x:Key="StatusText">SAFE CONTENT</system:String>
+
+    <system:String x:Key="MsgUnknownTitle">UNKNOWN CONTENT</system:String>
+    <system:String x:Key="MsgUnknownDesc">This file or link has never been&#x0a;scanned in the database before.</system:String>
+
+    <system:String x:Key="MsgPhishingTitle">PHISHING DETECTED!</system:String>
+    <system:String x:Key="MsgSuspiciousTextTitle">SUSPICIOUS TEXT</system:String>
+    <system:String x:Key="MsgAnalysisClean">Analysis Clean (No Threat Detected)</system:String>
+    <system:String x:Key="MsgThreatScoreDetails">Threat Score: {0}/100&#x0a;{1}</system:String>
+    <system:String x:Key="MsgCriticalPhishingRisk">Critical Warning: {0}% Phishing Risk</system:String>
+    <system:String x:Key="MsgWarningSuspiciousContent">Warning: {0}% Suspicious Content</system:String>
+
+    <system:String x:Key="MsgAiSafeContentDesc">AI Model: No Threat&#x0a;Detected.</system:String>
+    <system:String x:Key="MsgAiAccuracy">Active - Accuracy Rate: 98.1%</system:String>
+    <system:String x:Key="ScanDescriptionText">AI Model: No Threat Detected</system:String>
+    <system:String x:Key="AiEngineTitle">Artificial Intelligence (AI) Engine</system:String>
+    <system:String x:Key="VtShieldTitle">VirusTotal API Shield</system:String>
+
+    <!-- ========================================== -->
+    <!-- PROCESSING & VALIDATION MESSAGES           -->
+    <!-- ========================================== -->
+    <system:String x:Key="MsgProcessing">Processing Data...</system:String>
+    <system:String x:Key="MsgPleaseWait">Please Wait...</system:String>
+    <system:String x:Key="MsgInvalidTitle">Invalid Input</system:String>
+    <system:String x:Key="MsgInvalidDesc">Please make sure you have entered valid data.</system:String>
+
+    <!-- ========================================== -->
+    <!-- SYSTEM TRAY & RADAR MESSAGES               -->
+    <!-- ========================================== -->
+    <system:String x:Key="MsgRadarActiveTitle">Radar Active</system:String>
+    <system:String x:Key="MsgRadarActiveDesc">The downloads folder is now being monitored in real-time.</system:String>
+    <system:String x:Key="MsgAutoCaught">🚨 Auto-Caught: {0}</system:String>
+    <system:String x:Key="MsgNewFileCaughtTitle">New File Caught!</system:String>
+    <system:String x:Key="MsgNewFileCaughtDesc">{0} has been downloaded and is being analyzed...</system:String>
+    <system:String x:Key="MsgShieldActiveTitle">Cyber Shield Active</system:String>
+    <system:String x:Key="MsgShieldActiveDesc">The application continues to protect your system in the background.</system:String>
+
+    <!-- ========================================== -->
+    <!-- UI ELEMENTS & TABS                         -->
+    <!-- ========================================== -->
+    <system:String x:Key="TabText">Text(Email)</system:String>
+    <system:String x:Key="TabUrl">Link(URL)</system:String>
+    <system:String x:Key="TabFile">Add File</system:String>
+    <system:String x:Key="ThreatRadar">Threat Radar</system:String>
+    <system:String x:Key="RealTimeReader">Monitor Download's Folder in Real-Time</system:String>
+    <system:String x:Key="MsgFileDialogTitle">Taranacak Dosyayı Seçin</system:String>
+    <system:String x:Key="MsgFileDialogFilter">Tüm Dosyalar (*.*)|*.*</system:String>
+    <system:String x:Key="MsgFileSelected">Selected File: {0}</system:String>
+
+    <!-- ========================================== -->
+    <!-- INPUT HINTS & PLACEHOLDERS                 -->
+    <!-- ========================================== -->
+    <system:String x:Key="TextExampleHint">E.g.: Hello, the agenda for tomorrow's city council meeting is attached...</system:String>
+    <system:String x:Key="TextUrlHint">Paste the link(URL) to be scanned.</system:String>
+    <system:String x:Key="LinkText">https:// (E.g: www.google.com)</system:String>
+    <system:String x:Key="SelectedFileNameText">Drag and Drop or Select</system:String>
+
+    <!-- ========================================== -->
+    <!-- BUTTONS & ACTIONS                          -->
+    <!-- ========================================== -->
+    <system:String x:Key="FolderUploadButton">Browse from Computer</system:String>
+    <system:String x:Key="DownloadPDF">Download PDF</system:String>
+    <system:String x:Key="NewScan">New Scan</system:String>
+    <system:String x:Key="StartScan">Start Security Scan</system:String>
+    <system:String x:Key="StartScanText">Start Security Scan</system:String>
+    <system:String x:Key="DeleteThreat">Delete Threat</system:String>
+    <system:String x:Key="DeleteThreatText">Delete Threat</system:String>
+
+</ResourceDictionary>
