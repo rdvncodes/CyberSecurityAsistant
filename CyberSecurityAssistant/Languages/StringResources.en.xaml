@@ -1,11 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
     <!-- ========================================== -->
     <!-- SYSTEM TRAY & RADAR MESSAGES               -->
     <!-- ========================================== -->
-    <system:String x:Key="MsgTrayIconHover">Cyber Shield&#x0a;Your System is Protected</system:String>
+    <system:String x:Key="MsgTrayIconHover">Cyber Mail &amp; Security Assistant&#x0a;Your System is Protected</system:String>
     <system:String x:Key="MsgTrayOpenUI">Open Shield Interface</system:String>
     <system:String x:Key="MsgTrayExit">Stop Protection and Exit</system:String>
 
@@ -82,9 +82,9 @@
     <system:String x:Key="TabUrl">Link(URL)</system:String>
     <system:String x:Key="TabFile">Add File</system:String>
     <system:String x:Key="ThreatRadar">Threat Radar</system:String>
-    <system:String x:Key="RealTimeReader">Monitor Download's Folder in Real-Time</system:String>
-    <system:String x:Key="MsgFileDialogTitle">Taranacak Dosyayı Seçin</system:String>
-    <system:String x:Key="MsgFileDialogFilter">Tüm Dosyalar (*.*)|*.*</system:String>
+    <system:String x:Key="RealTimeReader">Monitor Downloads Folder in Real-Time</system:String>
+    <system:String x:Key="MsgFileDialogTitle">Select File to Scan</system:String>
+    <system:String x:Key="MsgFileDialogFilter">All Files (*.*)|*.*</system:String>
     <system:String x:Key="MsgFileSelected">Selected File: {0}</system:String>
 
     <!-- ========================================== -->
@@ -105,5 +105,134 @@
     <system:String x:Key="StartScanText">Start Security Scan</system:String>
     <system:String x:Key="DeleteThreat">Delete Threat</system:String>
     <system:String x:Key="DeleteThreatText">Delete Threat</system:String>
+
+    <!-- ========================================== -->
+    <!-- MENU ITEMS                                  -->
+    <!-- ========================================== -->
+    <system:String x:Key="MenuFile">File</system:String>
+    <system:String x:Key="MenuEdit">Edit</system:String>
+    <system:String x:Key="MenuView">View</system:String>
+    <system:String x:Key="MenuHelp">Help</system:String>
+    <system:String x:Key="MenuNewMail">New Mail</system:String>
+    <system:String x:Key="MenuGmailSettings">Gmail Settings</system:String>
+    <system:String x:Key="MenuExit">Exit</system:String>
+    <system:String x:Key="MenuDelete">Delete</system:String>
+    <system:String x:Key="MenuMarkAsRead">Mark as Read</system:String>
+    <system:String x:Key="MenuMarkAsSpam">Mark as Spam</system:String>
+    <system:String x:Key="MenuRefresh">Refresh</system:String>
+    <system:String x:Key="MenuSyncGmail">Sync Gmail</system:String>
+    <system:String x:Key="MenuAbout">About</system:String>
+    <system:String x:Key="MenuAppPassword">How to Get App Password?</system:String>
+
+    <!-- ========================================== -->
+    <!-- MAIL UI                                    -->
+    <!-- ========================================== -->
+    <system:String x:Key="Inbox">Inbox</system:String>
+    <system:String x:Key="Sent">Sent</system:String>
+    <system:String x:Key="Drafts">Drafts</system:String>
+    <system:String x:Key="Spam">Spam</system:String>
+    <system:String x:Key="Trash">Trash</system:String>
+    <system:String x:Key="NewMail">New Mail</system:String>
+    <system:String x:Key="NoMails">No mails found</system:String>
+    <system:String x:Key="SelectMail">Select a mail</system:String>
+    <system:String x:Key="From">From:</system:String>
+    <system:String x:Key="Reply">Reply</system:String>
+    <system:String x:Key="Delete">Delete</system:String>
+    <system:String x:Key="To">To:</system:String>
+    <system:String x:Key="Subject">Subject:</system:String>
+    <system:String x:Key="Body">Body:</system:String>
+    <system:String x:Key="Send">Send</system:String>
+    <system:String x:Key="Cancel">Cancel</system:String>
+    <system:String x:Key="Save">Save</system:String>
+    <system:String x:Key="Close">Close</system:String>
+    <system:String x:Key="AppSettings">App Settings</system:String>
+
+    <!-- ========================================== -->
+    <!-- GMAIL                                      -->
+    <!-- ========================================== -->
+    <system:String x:Key="GmailNotConnected">Not connected</system:String>
+    <system:String x:Key="ConnectGmail">Connect Gmail</system:String>
+    <system:String x:Key="SyncGmail">Sync</system:String>
+    <system:String x:Key="AppPasswordHelp">How to Get App Password?</system:String>
+    <system:String x:Key="StatusReady">Ready</system:String>
+
+    <!-- ========================================== -->
+    <!-- SCANNER & ANALYZER MESSAGES               -->
+    <!-- ========================================== -->
+    <system:String x:Key="TabMail">Mail</system:String>
+    <system:String x:Key="TabScanner">Scanner</system:String>
+    <system:String x:Key="LabelSafe">Safe</system:String>
+    <system:String x:Key="LabelSuspicious">Suspicious</system:String>
+    <system:String x:Key="LabelCritical">Critical</system:String>
+    <system:String x:Key="ScoreGaugeLabel">Threat Score</system:String>
+    <system:String x:Key="Quarantine">Quarantine</system:String>
+    <system:String x:Key="AnalyzeButton">Analyze with AI</system:String>
+    <system:String x:Key="ClearInput">Clear</system:String>
+
+    <!-- Status Messages -->
+    <system:String x:Key="StatusAnalyzingMail">Analyzing mail...</system:String>
+    <system:String x:Key="StatusAnalysisComplete">Analysis complete</system:String>
+    <system:String x:Key="StatusAnalysisNoThreat">Analysis complete — No threat detected</system:String>
+    <system:String x:Key="StatusSendingMail">Sending mail...</system:String>
+    <system:String x:Key="StatusSyncingGmail">Syncing Gmail...</system:String>
+    <system:String x:Key="StatusGmailConnectionError">Gmail connection error!</system:String>
+    <system:String x:Key="StatusGmailConnected">Gmail connected</system:String>
+    <system:String x:Key="StatusMailsRefreshed">Mails refreshed</system:String>
+    <system:String x:Key="StatusMailDeleted">Mail deleted</system:String>
+    <system:String x:Key="StatusMarkedAsSpam">Marked as spam</system:String>
+    <system:String x:Key="StatusSettingsSaved">Settings saved</system:String>
+    <system:String x:Key="StatusAnalyzing">Analyzing...</system:String>
+    <system:String x:Key="StatusAnalysisError">Analysis error</system:String>
+    <system:String x:Key="StatusLogsRefreshed">Logs refreshed</system:String>
+    <system:String x:Key="StatusRefreshingMails">Refreshing mails...</system:String>
+    <system:String x:Key="StatusThreatDeleted">Threat deleted</system:String>
+    <system:String x:Key="StatusMovedToTrash">Moved to trash</system:String>
+    <system:String x:Key="StatusPermanentlyDeleted">Permanently deleted</system:String>
+
+    <!-- API Messages -->
+    <system:String x:Key="ApiWaiting">API: Waiting</system:String>
+    <system:String x:Key="ApiConnected">API: Connected</system:String>
+    <system:String x:Key="ApiOffline">API: Offline</system:String>
+    <system:String x:Key="ApiUrlSaved">API URL saved</system:String>
+    <system:String x:Key="ConnectionTestInProgress">Testing connection...</system:String>
+    <system:String x:Key="ConnectionSuccess">API connection successful!</system:String>
+    <system:String x:Key="ConnectionFailed">Connection failed</system:String>
+
+    <!-- System Messages -->
+    <system:String x:Key="MsgAnalyzeHint">Enter a text and click&#x0a;'Analyze with AI' button.</system:String>
+    <system:String x:Key="MsgSafeContent">Content evaluated as safe. No threat detected.</system:String>
+    <system:String x:Key="MsgSuspiciousContent">Content marked as suspicious. May be spam or potential threat.</system:String>
+    <system:String x:Key="MsgCriticalContent">DANGER! High level of malicious content detected.</system:String>
+
+    <!-- Analysis Labels -->
+    <system:String x:Key="LabelPhishing">Phishing</system:String>
+    <system:String x:Key="LabelSpam">Spam</system:String>
+    <system:String x:Key="LabelSqlInjection">SQL Injection</system:String>
+    <system:String x:Key="LabelXss">XSS</system:String>
+    <system:String x:Key="LabelTrojan">Trojan</system:String>
+
+    <!-- System Tray -->
+    <system:String x:Key="TrayOpen">Open</system:String>
+    <system:String x:Key="TrayExit">Exit</system:String>
+    <system:String x:Key="TabMailApp">📧 Mail App</system:String>
+    <system:String x:Key="TabScannerApp">🔍 Security Scan</system:String>
+    <system:String x:Key="BtnNewMail">New Mail</system:String>
+    <system:String x:Key="BtnReply">Reply</system:String>
+    <system:String x:Key="BtnDelete">Delete</system:String>
+    <system:String x:Key="ScanTabText">Text Analysis</system:String>
+    <system:String x:Key="ScanTabUrl">URL Analysis</system:String>
+    <system:String x:Key="ScanTabFile">File Analysis</system:String>
+    <system:String x:Key="BtnClear">Clear</system:String>
+    <system:String x:Key="BtnSelectFile">Select File</system:String>
+    <system:String x:Key="BtnRefresh">Refresh</system:String>
+    <system:String x:Key="BtnTestConnection">Test</system:String>
+    <system:String x:Key="BtnSaveApiUrl">Save</system:String>
+    <system:String x:Key="BtnCancel">Cancel</system:String>
+    <system:String x:Key="BtnSave">Save</system:String>
+    <system:String x:Key="BtnSend">Send</system:String>
+    <system:String x:Key="BtnClose">Close</system:String>
+    <system:String x:Key="HintTextInput">Paste text here or type...</system:String>
+    <system:String x:Key="HintUrlInput">Paste URL here...</system:String>
+    <system:String x:Key="HintFileInput">Drag and drop or select file</system:String>
 
 </ResourceDictionary>

@@ -1,11 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
     <!-- ========================================== -->
     <!-- SİSTEM TEPSİSİ VE RADAR MESAJLARI          -->
     <!-- ========================================== -->
-    <system:String x:Key="MsgTrayIconHover">SiberBelediye Kalkanı&#x0a;Sisteminiz Korunuyor</system:String>
+    <system:String x:Key="MsgTrayIconHover">Siber Mail &amp; Güvenlik Asistanı&#x0a;Sisteminiz Korunuyor</system:String>
     <system:String x:Key="MsgTrayOpenUI">Kalkan Arayüzünü Aç</system:String>
     <system:String x:Key="MsgTrayExit">Korumayı Durdur ve Çıkış Yap</system:String>
 
@@ -105,5 +105,134 @@
     <system:String x:Key="StartScanText">Güvenlik Taramasını Başlat</system:String>
     <system:String x:Key="DeleteThreat">Tehdidi Sil</system:String>
     <system:String x:Key="DeleteThreatText">Tehdidi Sil</system:String>
+
+    <!-- ========================================== -->
+    <!-- MENÜ ÖĞELERİ                                -->
+    <!-- ========================================== -->
+    <system:String x:Key="MenuFile">Dosya</system:String>
+    <system:String x:Key="MenuEdit">Düzen</system:String>
+    <system:String x:Key="MenuView">Görünüm</system:String>
+    <system:String x:Key="MenuHelp">Yardım</system:String>
+    <system:String x:Key="MenuNewMail">Yeni Mail</system:String>
+    <system:String x:Key="MenuGmailSettings">Gmail Ayarları</system:String>
+    <system:String x:Key="MenuExit">Çıkış</system:String>
+    <system:String x:Key="MenuDelete">Sil</system:String>
+    <system:String x:Key="MenuMarkAsRead">Okundu İşaretle</system:String>
+    <system:String x:Key="MenuMarkAsSpam">Spam İşaretle</system:String>
+    <system:String x:Key="MenuRefresh">Yenile</system:String>
+    <system:String x:Key="MenuSyncGmail">Gmail Senkronize Et</system:String>
+    <system:String x:Key="MenuAbout">Hakkında</system:String>
+    <system:String x:Key="MenuAppPassword">App Password Nasıl Alınır?</system:String>
+
+    <!-- ========================================== -->
+    <!-- MAİL ARAYÜZÜ                                -->
+    <!-- ========================================== -->
+    <system:String x:Key="Inbox">Gelen Kutusu</system:String>
+    <system:String x:Key="Sent">Giden Kutusu</system:String>
+    <system:String x:Key="Drafts">Taslaklar</system:String>
+    <system:String x:Key="Spam">Spam</system:String>
+    <system:String x:Key="Trash">Çöp Kutusu</system:String>
+    <system:String x:Key="NewMail">Yeni Mail</system:String>
+    <system:String x:Key="NoMails">Mail bulunmuyor</system:String>
+    <system:String x:Key="SelectMail">Bir mail seçin</system:String>
+    <system:String x:Key="From">Kimden:</system:String>
+    <system:String x:Key="Reply">Yanıtla</system:String>
+    <system:String x:Key="Delete">Sil</system:String>
+    <system:String x:Key="To">Kime:</system:String>
+    <system:String x:Key="Subject">Konu:</system:String>
+    <system:String x:Key="Body">İçerik:</system:String>
+    <system:String x:Key="Send">Gönder</system:String>
+    <system:String x:Key="Cancel">İptal</system:String>
+    <system:String x:Key="Save">Kaydet</system:String>
+    <system:String x:Key="Close">Kapat</system:String>
+    <system:String x:Key="AppSettings">Uygulama Ayarları</system:String>
+
+    <!-- ========================================== -->
+    <!-- GMAİL                                       -->
+    <!-- ========================================== -->
+    <system:String x:Key="GmailNotConnected">Bağlı değil</system:String>
+    <system:String x:Key="ConnectGmail">Gmail Bağla</system:String>
+    <system:String x:Key="SyncGmail">Senkronize Et</system:String>
+    <system:String x:Key="AppPasswordHelp">App Password Nasıl Alınır?</system:String>
+    <system:String x:Key="StatusReady">Hazır</system:String>
+
+    <!-- ========================================== -->
+    <!-- SCANNER & ANALYZER MESSAGES               -->
+    <!-- ========================================== -->
+    <system:String x:Key="TabMail">Mail</system:String>
+    <system:String x:Key="TabScanner">Tarayıcı</system:String>
+    <system:String x:Key="LabelSafe">Güvenli</system:String>
+    <system:String x:Key="LabelSuspicious">Şüpheli</system:String>
+    <system:String x:Key="LabelCritical">Kritik</system:String>
+    <system:String x:Key="ScoreGaugeLabel">Tehdit Skoru</system:String>
+    <system:String x:Key="Quarantine">Karantina</system:String>
+    <system:String x:Key="AnalyzeButton">Yapay Zeka ile Analiz Et</system:String>
+    <system:String x:Key="ClearInput">Temizle</system:String>
+
+    <!-- Status Messages -->
+    <system:String x:Key="StatusAnalyzingMail">Mail analiz ediliyor...</system:String>
+    <system:String x:Key="StatusAnalysisComplete">Analiz tamamlandı</system:String>
+    <system:String x:Key="StatusAnalysisNoThreat">Analiz tamamlandı — Tehdit bulunamadı</system:String>
+    <system:String x:Key="StatusSendingMail">Mail gönderiliyor...</system:String>
+    <system:String x:Key="StatusSyncingGmail">Gmail senkronize ediliyor...</system:String>
+    <system:String x:Key="StatusGmailConnectionError">Gmail bağlantı hatası!</system:String>
+    <system:String x:Key="StatusGmailConnected">Gmail bağlantısı kuruldu</system:String>
+    <system:String x:Key="StatusMailsRefreshed">Mailler yenilendi</system:String>
+    <system:String x:Key="StatusMailDeleted">Mail silindi</system:String>
+    <system:String x:Key="StatusMarkedAsSpam">Spam olarak işaretlendi</system:String>
+    <system:String x:Key="StatusSettingsSaved">Ayarlar kaydedildi</system:String>
+    <system:String x:Key="StatusAnalyzing">Analiz yapılıyor...</system:String>
+    <system:String x:Key="StatusAnalysisError">Analiz hatası</system:String>
+    <system:String x:Key="StatusLogsRefreshed">Loglar yenilendi</system:String>
+    <system:String x:Key="StatusRefreshingMails">Mailler güncelleniyor...</system:String>
+    <system:String x:Key="StatusThreatDeleted">Tehdit silindi</system:String>
+    <system:String x:Key="StatusMovedToTrash">Çöp kutusuna taşındı</system:String>
+    <system:String x:Key="StatusPermanentlyDeleted">Kalıcı olarak silindi</system:String>
+
+    <!-- API Messages -->
+    <system:String x:Key="ApiWaiting">API: Bekleniyor</system:String>
+    <system:String x:Key="ApiConnected">API: Bağlı</system:String>
+    <system:String x:Key="ApiOffline">API: Çevrimdışı</system:String>
+    <system:String x:Key="ApiUrlSaved">API URL kaydedildi</system:String>
+    <system:String x:Key="ConnectionTestInProgress">Bağlantı test ediliyor...</system:String>
+    <system:String x:Key="ConnectionSuccess">API bağlantısı başarılı!</system:String>
+    <system:String x:Key="ConnectionFailed">Bağlantı başarısız</system:String>
+
+    <!-- System Messages -->
+    <system:String x:Key="MsgAnalyzeHint">Analiz için bir metin girin ve 'Yapay Zeka ile Analiz Et' butonuna tıklayın.</system:String>
+    <system:String x:Key="MsgSafeContent">İçerik güvenli olarak değerlendirildi. Herhangi bir tehdit tespit edilmedi.</system:String>
+    <system:String x:Key="MsgSuspiciousContent">İçerik şüpheli olarak işaretlendi. Spam veya potansiyel tehdit olabilir.</system:String>
+    <system:String x:Key="MsgCriticalContent">TEHLİKE! Yüksek oranda zararlı içerik tespit edildi.</system:String>
+
+    <!-- Analysis Labels -->
+    <system:String x:Key="LabelPhishing">Phishing</system:String>
+    <system:String x:Key="LabelSpam">Spam</system:String>
+    <system:String x:Key="LabelSqlInjection">SQL Injection</system:String>
+    <system:String x:Key="LabelXss">XSS</system:String>
+    <system:String x:Key="LabelTrojan">Trojan</system:String>
+
+    <!-- System Tray -->
+    <system:String x:Key="TrayOpen">Aç</system:String>
+    <system:String x:Key="TrayExit">Çıkış</system:String>
+    <system:String x:Key="TabMailApp">📧 Mail Uygulaması</system:String>
+    <system:String x:Key="TabScannerApp">🔍 Güvenlik Taraması</system:String>
+    <system:String x:Key="BtnNewMail">Yeni Mail</system:String>
+    <system:String x:Key="BtnReply">Yanıtla</system:String>
+    <system:String x:Key="BtnDelete">Sil</system:String>
+    <system:String x:Key="ScanTabText">Metin Analizi</system:String>
+    <system:String x:Key="ScanTabUrl">URL Analizi</system:String>
+    <system:String x:Key="ScanTabFile">Dosya Analizi</system:String>
+    <system:String x:Key="BtnClear">Temizle</system:String>
+    <system:String x:Key="BtnSelectFile">Dosya Seç</system:String>
+    <system:String x:Key="BtnRefresh">Yenile</system:String>
+    <system:String x:Key="BtnTestConnection">Test Et</system:String>
+    <system:String x:Key="BtnSaveApiUrl">Kaydet</system:String>
+    <system:String x:Key="BtnCancel">İptal</system:String>
+    <system:String x:Key="BtnSave">Kaydet</system:String>
+    <system:String x:Key="BtnSend">Gönder</system:String>
+    <system:String x:Key="BtnClose">Kapat</system:String>
+    <system:String x:Key="HintTextInput">Metni buraya yapıştırın veya yazın...</system:String>
+    <system:String x:Key="HintUrlInput">URL'yi buraya yapıştırın...</system:String>
+    <system:String x:Key="HintFileInput">Dosya sürükleyin veya seçin</system:String>
 
 </ResourceDictionary>

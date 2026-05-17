@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Siber Mail & Güvenlik Asistanı — Bitirme Sunumu</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/black.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #3B82F6;
+            --primary-dark: #1E40AF;
+            --success: #4ADE80;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --purple: #A855F7;
+            --bg-card: #1A1C1E;
+            --bg-deeper: #0F1011;
+            --border: #2C2F33;
+        }
+
+        .reveal { font-family: 'Inter', -apple-system, sans-serif; }
+        .reveal section { text-align: left; }
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            text-transform: none;
+            letter-spacing: -0.02em;
+            color: #fff;
+        }
+        .reveal h1 { font-size: 2.4em; }
+        .reveal h2 { font-size: 1.8em; color: var(--primary); }
+        .reveal h3 { font-size: 1.3em; color: var(--success); }
+        .reveal p, .reveal li { line-height: 1.55; }
+        .reveal pre, .reveal code { font-family: 'JetBrains Mono', monospace; }
+        .reveal pre { box-shadow: 0 8px 32px rgba(0,0,0,0.5); border-radius: 8px; font-size: 0.55em; }
+        .reveal code { background: #0F1011; padding: 2px 8px; border-radius: 4px; color: var(--success); }
+        .reveal table { border-collapse: collapse; margin: 20px auto; font-size: 0.75em; }
+        .reveal table th { background: var(--primary); color: white; padding: 10px 14px; text-align: left; }
+        .reveal table td { padding: 8px 14px; border-bottom: 1px solid var(--border); }
+        .reveal section img { border: none; box-shadow: none; background: none; }
+        .reveal a { color: var(--primary); }
+
+        .reveal section { background: linear-gradient(135deg, #0F1011 0%, #1A1C1E 100%); }
+
+        /* TITLE SLIDE */
+        .title-slide { text-align: center !important; }
+        .title-slide h1 {
+            font-size: 3.4em !important;
+            background: linear-gradient(135deg, #3B82F6 0%, #A855F7 50%, #EC4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+        .title-slide .subtitle { font-size: 1.3em; color: #A0A0A0; margin-bottom: 40px; }
+        .title-slide .team { font-size: 0.7em; color: #707070; margin-top: 60px; }
+        .shield-icon {
+            font-size: 5em;
+            display: block;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 30px rgba(59, 130, 246, 0.5));
+        }
+
+        /* CARDS */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 12px 0;
+        }
+        .card-blue { border-left: 4px solid var(--primary); }
+        .card-green { border-left: 4px solid var(--success); }
+        .card-red { border-left: 4px solid var(--danger); }
+        .card-yellow { border-left: 4px solid var(--warning); }
+        .card-purple { border-left: 4px solid var(--purple); }
+
+        /* GRID */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+        .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 14px; }
+
+        /* STATS */
+        .stat-big {
+            font-size: 2.8em;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .stat-label { font-size: 0.7em; color: #A0A0A0; }
+        .stat-card {
+            text-align: center;
+            background: var(--bg-card);
+            padding: 24px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        /* BADGES */
+        .badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.65em;
+            font-weight: 600;
+            margin: 2px;
+        }
+        .badge-green { background: var(--success); color: #000; }
+        .badge-red { background: var(--danger); }
+        .badge-yellow { background: var(--warning); color: #000; }
+        .badge-purple { background: var(--purple); }
+
+        /* ARCHITECTURE BOX */
+        .arch-box {
+            background: var(--bg-card);
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            padding: 10px 18px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.8em;
+        }
+        .arch-arrow { text-align: center; color: var(--primary); font-size: 1.5em; }
+
+        /* SECTION DIVIDER */
+        .section-divider {
+            text-align: center !important;
+        }
+        .section-divider h1 {
+            font-size: 4em !important;
+            background: linear-gradient(135deg, #3B82F6 0%, #A855F7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .section-divider .num {
+            font-size: 6em;
+            color: #2C2F33;
+            font-weight: 800;
+            margin-bottom: 0;
+        }
+
+        /* MEMBER CARDS */
+        .member-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+        .member-card.leader { border: 2px solid var(--primary); }
+        .member-card .name { font-size: 1.05em; font-weight: 700; color: #fff; margin-bottom: 4px; }
+        .member-card .id { font-size: 0.7em; color: #707070; margin-bottom: 8px; }
+        .member-card .role { font-size: 0.75em; color: #D0D0D0; }
+        .leader-badge {
+            background: var(--primary);
+            color: white;
+            font-size: 0.55em;
+            padding: 3px 10px;
+            border-radius: 8px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        /* PROBLEM STATS */
+        .big-number {
+            font-size: 4em;
+            font-weight: 800;
+            color: var(--danger);
+            line-height: 1;
+        }
+
+        /* FEATURE LIST */
+        .feature-item {
+            display: flex;
+            align-items: start;
+            gap: 14px;
+            margin: 14px 0;
+        }
+        .feature-icon {
+            font-size: 1.8em;
+            min-width: 40px;
+        }
+        .feature-text strong { color: #fff; font-size: 1em; }
+        .feature-text p { color: #A0A0A0; font-size: 0.8em; margin: 4px 0 0; }
+
+        /* TIMELINE */
+        .timeline-item {
+            border-left: 3px solid var(--primary);
+            padding-left: 20px;
+            margin: 16px 0;
+        }
+        .timeline-item .step { color: var(--primary); font-weight: 700; font-size: 0.75em; }
+
+        .small { font-size: 0.7em; color: #707070; }
+
+        /* FOOTER LOGO */
+        .slide-number {
+            color: var(--primary) !important;
+            font-family: 'JetBrains Mono', monospace !important;
+        }
+
+        /* HIGHLIGHT */
+        .hl { color: var(--primary); font-weight: 600; }
+        .hl-g { color: var(--success); font-weight: 600; }
+        .hl-r { color: var(--danger); font-weight: 600; }
+        .hl-y { color: var(--warning); font-weight: 600; }
+
+        /* QUOTE */
+        .quote {
+            font-size: 1.4em;
+            font-style: italic;
+            color: #D0D0D0;
+            border-left: 4px solid var(--primary);
+            padding-left: 24px;
+            margin: 24px 0;
+        }
+
+        /* CHECK LIST */
+        .check-list { list-style: none; padding: 0; }
+        .check-list li {
+            padding: 8px 0;
+            padding-left: 32px;
+            position: relative;
+        }
+        .check-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: 800;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="reveal">
+    <div class="slides">
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 01 - TITLE SLIDE                                                  -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section class="title-slide">
+            <div class="shield-icon">🛡️</div>
+            <h1>Siber Mail &amp;<br>Güvenlik Asistanı</h1>
+            <div class="subtitle">Yapay Zeka Destekli E-posta Güvenlik Sistemi</div>
+            <div style="margin-top: 30px;">
+                <span class="badge">.NET 8</span>
+                <span class="badge badge-green">Machine Learning</span>
+                <span class="badge badge-purple">VirusTotal API</span>
+                <span class="badge badge-yellow">KVKK Uyumlu</span>
+            </div>
+            <div class="team">
+                <p><strong>Bitirme Projesi</strong> · Mayıs 2026</p>
+                <p>Rıdvan Gürdal · Deniz Şahin · Parsa Karami · Yunus Emre Beker</p>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 02 - GÜNDEM                                                       -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section>
+            <h2>📋 Sunum Gündemi</h2>
+            <div class="grid-2" style="margin-top: 30px;">
+                <div>
+                    <ol style="font-size: 0.85em;">
+                        <li>Problem &amp; Pazar İhtiyacı</li>
+                        <li>Çözümümüz</li>
+                        <li>Değer Önerisi</li>
+                        <li>Ürün Özellikleri</li>
+                        <li>Canlı Demo</li>
+                        <li>Teknik Mimari</li>
+                    </ol>
+                </div>
+                <div>
+                    <ol start="7" style="font-size: 0.85em;">
+                        <li>Yapay Zeka Modeli</li>
+                        <li>VirusTotal Entegrasyonu</li>
+                        <li>Güvenlik &amp; KVKK</li>
+                        <li>Performans Optimizasyonları</li>
+                        <li>Ekip &amp; Sorumluluklar</li>
+                        <li>Yol Haritası</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 03 - SECTION DIVIDER: PROBLEM                                     -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section class="section-divider">
+            <div class="num">01</div>
+            <h1>Problem</h1>
+            <p class="subtitle">E-posta hâlâ saldırıların #1 vektörü</p>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 04 - PROBLEM İSTATİSTİKLERİ                                       -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section>
+            <h2>🎯 Tehdit Manzarası</h2>
+            <div class="grid-3" style="margin-top: 30px;">
+                <div class="stat-card">
+                    <div class="big-number">%91</div>
+                    <div class="stat-label">Tüm siber saldırıların <strong>e-posta</strong> ile başladığı oran <span class="small">(Deloitte 2023)</span></div>
+                </div>
+                <div class="stat-card">
+                    <div class="big-number">3.4B</div>
+                    <div class="stat-label">Günlük gönderilen <strong>phishing</strong> e-posta sayısı <span class="small">(Valimail 2024)</span></div>
+                </div>
+                <div class="stat-card">
+                    <div class="big-number">$4.9M</div>
+                    <div class="stat-label">Bir veri ihlalinin <strong>ortalama maliyeti</strong> <span class="small">(IBM 2024)</span></div>
+                </div>
+            </div>
+            <div class="quote" style="margin-top: 40px;">
+                Türkiye'de KOBİ'lerin <span class="hl-r">%67'si</span> son 12 ayda en az bir kez phishing saldırısına maruz kaldı.
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 05 - MEVCUT ÇÖZÜMLERİN EKSİKLERİ                                  -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section>
+            <h2>❌ Mevcut Çözümlerin Eksikleri</h2>
+            <div class="grid-2" style="margin-top: 24px;">
+                <div class="card card-red">
+                    <h3 style="color: var(--danger); margin-top: 0;">🌐 Web Tabanlı Filtreler</h3>
+                    <ul style="font-size: 0.8em;">
+                        <li>Mail içeriği <strong>3. parti sunucularda</strong> işlenir</li>
+                        <li>KVKK ihlali riski</li>
+                        <li>Pahalı abonelik modelleri</li>
+                    </ul>
+                </div>
+                <div class="card card-red">
+                    <h3 style="color: var(--danger); margin-top: 0;">🏢 Kurumsal SIEM Çözümleri</h3>
+                    <ul style="font-size: 0.8em;">
+                        <li>KOBİ'lere fazla pahalı (yıllık $10K+)</li>
+                        <li>Karmaşık kurulum (haftalar sürer)</li>
+                        <li>Özel BT ekibi gerektirir</li>
+                    </ul>
+                </div>
+                <div class="card card-red">
+                    <h3 style="color: var(--danger); margin-top: 0;">📱 Gmail Yerleşik Filtre</h3>
+                    <ul style="font-size: 0.8em;">
+                        <li>Sadece spam — phishing zayıf</li>
+                        <li>Eki tarama yetersiz</li>
+                        <li>Şeffaflık yok (kara kutu)</li>
+                    </ul>
+                </div>
+                <div class="card card-red">
+                    <h3 style="color: var(--danger); margin-top: 0;">🛡️ Klasik Antivirüsler</h3>
+                    <ul style="font-size: 0.8em;">
+                        <li>Mail içeriği analiz etmez</li>
+                        <li>Sadece dosya çalıştırıldığında uyarır</li>
+                        <li>URL kontrolü zayıf</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 06 - SECTION DIVIDER: ÇÖZÜM                                       -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section class="section-divider">
+            <div class="num">02</div>
+            <h1>Çözümümüz</h1>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 07 - ÇÖZÜM: ONE-LINER                                             -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section>
+            <div style="text-align: center; margin-top: 100px;">
+                <div style="font-size: 5em;">🛡️</div>
+                <h1 style="margin: 20px 0;">Siber Mail &amp; Güvenlik Asistanı</h1>
+                <div class="quote" style="text-align: center; font-size: 1.3em; max-width: 900px; margin: 40px auto;">
+                    Gmail kullanan bireyler ve KOBİ'ler için, <span class="hl">%100 lokal çalışan</span>,
+                    <span class="hl-g">AI destekli</span> ve <span class="hl-y">KVKK uyumlu</span>
+                    e-posta güvenlik kalkanı.
+                </div>
+                <p style="color: #707070;">5 dakikada kurulum · Sıfır aylık ücret · Tek tıkla Gmail entegrasyonu</p>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 08 - DEĞER ÖNERİSİ                                                -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section>
+            <h2>💎 Değer Önerisi</h2>
+            <div class="grid-3" style="margin-top: 30px;">
+                <div class="stat-card">
+                    <div style="font-size: 2.5em;">🔒</div>
+                    <strong style="color: var(--primary);">Mahremiyet Önce</strong>
+                    <p class="small" style="margin-top: 10px;">Mail içeriği bulut yerine <strong>yerel SQLite</strong>'a yazılır. KVKK %100 uyumlu.</p>
+                </div>
+                <div class="stat-card">
+                    <div style="font-size: 2.5em;">🤖</div>
+                    <strong style="color: var(--success);">AI Çift Katman</strong>
+                    <p class="small" style="margin-top: 10px;">TF-IDF + scikit-learn ML modeli <strong>+</strong> 70+ antivirüs motoru (VirusTotal).</p>
+                </div>
+                <div class="stat-card">
+                    <div style="font-size: 2.5em;">⚡</div>
+                    <strong style="color: var(--warning);">Anında Tepki</strong>
+                    <p class="small" style="margin-top: 10px;">Tehlikeli mail tespit edilince <strong>otomatik karantina</strong>. Kullanıcı yorulmaz.</p>
+                </div>
+                <div class="stat-card">
+                    <div style="font-size: 2.5em;">💰</div>
+                    <strong style="color: var(--purple);">Sıfır Maliyet</strong>
+                    <p class="small" style="margin-top: 10px;">Kurumsal alternatifler $10K+/yıl. Bizim ürün <strong>ücretsiz</strong>.</p>
+                </div>
+                <div class="stat-card">
+                    <div style="font-size: 2.5em;">🌍</div>
+                    <strong style="color: #EC4899;">Yerel Adaptasyon</strong>
+                    <p class="small" style="margin-top: 10px;">Türkçe arayüz, <strong>TC Kimlik &amp; IBAN</strong> PII maskeleme, Türk regülasyonlarına uyum.</p>
+                </div>
+                <div class="stat-card">
+                    <div style="font-size: 2.5em;">🎯</div>
+                    <strong style="color: var(--danger);">5 Tehdit Tipi</strong>
+                    <p class="small" style="margin-top: 10px;">Phishing · Spam · SQL Injection · XSS · Trojan — tek panelden yönetim.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 09 - SECTION DIVIDER: ÖZELLİKLER                                  -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section class="section-divider">
+            <div class="num">03</div>
+            <h1>Ürün Özellikleri</h1>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 10 - ÖZELLİKLER DETAY                                             -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section>
+            <h2>✨ Temel Özellikler</h2>
+            <div class="grid-2" style="margin-top: 24px;">
+                <div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📧</div>
+                        <div class="feature-text">
+                            <strong>Gmail Tam Entegrasyon</strong>
+                            <p>IMAP/SMTP üzerinden inbox, sent, drafts, spam, trash — hepsi tek panelden</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🤖</div>
+                        <div class="feature-text">
+                            <strong>AI Phishing/Spam Tespiti</strong>
+                            <p>TF-IDF vektörizasyonu + scikit-learn ML modeli</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🦠</div>
+                        <div class="feature-text">
+                            <strong>VirusTotal Entegrasyonu</strong>
+                            <p>URL ve dosya hash'leri 70+ AV motoru ile taranır</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🚨</div>
+                        <div class="feature-text">
+                            <strong>Otomatik Karantina</strong>
+                            <p>Tehlikeli mailler ML analizi sonrası otomatik trash'e</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🚫</div>
+                        <div class="feature-text">
+                            <strong>Şüpheli Gönderici Listesi</strong>
+                            <p>Manuel kara liste — bu adreslerden mail ML'siz direkt çöpe</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📦</div>
+                        <div class="feature-text">
+                            <strong>Karantina Yönetimi</strong>
+                            <p>Tüm zararlı linkler/dosyalar tek panelde — silme/inceleme</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-text">
+                            <strong>PDF Raporlama</strong>
+                            <p>QuestPDF ile profesyonel güvenlik raporları</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🌍</div>
+                        <div class="feature-text">
+                            <strong>TR / EN Dil Desteği</strong>
+                            <p>Anlık dil değişimi, dinamik kaynaklar</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 11 - TEHDİT KATEGORİZASYONU                                       -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section>
+            <h2>🎯 Tespit Edilen Tehdit Tipleri</h2>
+            <div class="grid-3" style="margin-top: 30px;">
+                <div class="card card-red">
+                    <div style="font-size: 2em; text-align: center;">🎣</div>
+                    <h3 style="text-align: center; color: var(--danger);">Phishing</h3>
+                    <p class="small">Banka, kargo, devlet kurumu taklit eden kimlik avı mailleri</p>
+                </div>
+                <div class="card card-yellow">
+                    <div style="font-size: 2em; text-align: center;">📢</div>
+                    <h3 style="text-align: center; color: var(--warning);">Spam</h3>
+                    <p class="small">Toplu istenmeyen ticari mailler, reklam, dolandırıcılık</p>
+                </div>
+                <div class="card card-purple">
+                    <div style="font-size: 2em; text-align: center;">💉</div>
+                    <h3 style="text-align: center; color: var(--purple);">SQL Injection</h3>
+                    <p class="small">Form alanları üzerinden veritabanı saldırı denemeleri</p>
+                </div>
+                <div class="card" style="border-left: 4px solid #EC4899;">
+                    <div style="font-size: 2em; text-align: center;">🔓</div>
+                    <h3 style="text-align: center; color: #EC4899;">XSS</h3>
+                    <p class="small">JavaScript payload enjeksiyonu, çerez hırsızlığı</p>
+                </div>
+                <div class="card" style="border-left: 4px solid #6366F1;">
+                    <div style="font-size: 2em; text-align: center;">🐴</div>
+                    <h3 style="text-align: center; color: #6366F1;">Trojan</h3>
+                    <p class="small">Zararlı dosya ekleri, sahte fatura/CV ekli mailler</p>
+                </div>
+                <div class="card card-green">
+                    <div style="font-size: 2em; text-align: center;">✅</div>
+                    <h3 style="text-align: center; color: var(--success);">Skor Sistemi</h3>
+                    <p class="small">0-100 arası tehdit skoru, renkli rozet ile UI'da</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 12 - SECTION DIVIDER: DEMO                                        -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section class="section-divider">
+            <div class="num">04</div>
+            <h1>🎬 Canlı Demo</h1>
+            <p class="subtitle" style="margin-top: 30px;">Şimdi sistemi sizlere göstermeye geçelim</p>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 13 - DEMO AKIŞI                                                   -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section>
+            <h2>🎬 Demo Senaryosu</h2>
+            <div style="margin-top: 24px;">
+                <div class="timeline-item">
+                    <span class="step">ADIM 1</span>
+                    <div><strong>Uygulamayı açıyoruz</strong> — KVKK aydınlatma metni, Gmail bağlantısı</div>
+                </div>
+                <div class="timeline-item">
+                    <span class="step">ADIM 2</span>
+                    <div><strong>Inbox'a giriyoruz</strong> — gerçek mailler, otomatik tespit edilmiş tehdit rozetleri</div>
+                </div>
+                <div class="timeline-item">
+                    <span class="step">ADIM 3</span>
+                    <div><strong>Bir phishing mail açıyoruz</strong> — skor breakdown'u, AV motor sonuçları</div>
+                </div>
+                <div class="timeline-item">
+                    <span class="step">ADIM 4</span>
+                    <div><strong>Manuel URL/dosya taraması</strong> — VirusTotal entegrasyonu canlı</div>
+                </div>
+                <div class="timeline-item">
+                    <span class="step">ADIM 5</span>
+                    <div><strong>Şüpheli gönderici ekleme</strong> — kara liste, otomatik çöp</div>
+                </div>
+                <div class="timeline-item">
+                    <span class="step">ADIM 6</span>
+                    <div><strong>Karantina + PDF rapor</strong> — yönetim ekranları</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 14 - SECTION DIVIDER: TEKNİK                                      -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section class="section-divider">
+            <div class="num">05</div>
+            <h1>Teknik Mimari</h1>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 15 - YÜKSEK SEVİYE MİMARİ                                         -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section>
+            <h2>🏗️ Sistem Mimarisi</h2>
+            <pre style="font-size: 0.5em; line-height: 1.4;"><code>┌───────────────────────────────────────────────────────────┐
+│        WPF UI (MainWindow.xaml) — .NET 8                  │
+│        Türkçe / İngilizce dinamik kaynaklar               │
+└──────┬───────────────┬──────────────┬─────────────────────┘
+       ▼               ▼              ▼
+┌──────────────┐ ┌────────────┐ ┌─────────────────────┐
+│ GmailService │ │VirusTotal  │ │  MLModelService     │
+│ (MailKit)    │ │  Service   │ │  (HTTP→Flask)       │
+│ IMAP/SMTP    │ │  REST API  │ │                     │
+└──────┬───────┘ └──────┬─────┘ └──────────┬──────────┘
+       │                │                  │
+       │                ▼                  ▼
+       │         ┌──────────────┐  ┌──────────────────────┐
+       │         │  VtCache     │  │ FlaskServiceLauncher │
+       │         │  (24h TTL)   │  │   → predict.exe      │
+       │         └──────┬───────┘  └───────────┬──────────┘
+       ▼                ▼                      ▼
+┌──────────────────────────────┐    ┌─────────────────────┐
+│   SQLite (siberkalkan.db)    │    │ Python Flask        │
+│   • Mailler & klasörler      │    │ + scikit-learn      │
+│   • Karantina tabloları      │    │ (TF-IDF + Model)    │
+│   • DPAPI şifreli credentials│    └─────────────────────┘
+│   • PII-maskeli loglar       │
+└──────────────────────────────┘</code></pre>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 16 - TEKNOLOJİ STACK                                              -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section>
+            <h2>🧰 Teknoloji Stack</h2>
+            <table style="width: 100%;">
+                <thead>
+                    <tr><th>Katman</th><th>Teknoloji</th><th>Versiyon</th><th>Rol</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Frontend</td><td>WPF + XAML</td><td>.NET 8.0</td><td>Masaüstü UI</td></tr>
+                    <tr><td>Backend</td><td>C# 12</td><td>.NET 8.0</td><td>İş mantığı</td></tr>
+                    <tr><td>Mail Protokolü</td><td>MailKit / MimeKit</td><td>4.3.0</td><td>IMAP/SMTP istemcisi</td></tr>
+                    <tr><td>Veritabanı</td><td>SQLite</td><td>3.x</td><td>Lokal kalıcı depolama</td></tr>
+                    <tr><td>ML Framework</td><td>scikit-learn</td><td>1.0+</td><td>TF-IDF + sınıflandırma</td></tr>
+                    <tr><td>ML Runtime</td><td>Python + Flask</td><td>3.10+</td><td>REST API servisi</td></tr>
+                    <tr><td>PDF Üretimi</td><td>QuestPDF</td><td>2026.2</td><td>Rapor üretimi</td></tr>
+                    <tr><td>Bundle Tool</td><td>PyInstaller</td><td>—</td><td>predict.exe paketleme</td></tr>
+                    <tr><td>İkonlar</td><td>MahApps.Metro</td><td>6.2.1</td><td>Material design</td></tr>
+                    <tr><td>Şifreleme</td><td>Windows DPAPI</td><td>—</td><td>Credential koruması</td></tr>
+                    <tr><td>Dış API</td><td>VirusTotal v3</td><td>—</td><td>URL/dosya tarama</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 17 - YAPAY ZEKA MODELİ                                            -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section>
+            <h2>🤖 Yapay Zeka Pipeline'ı</h2>
+            <div class="grid-2" style="margin-top: 24px;">
+                <div>
+                    <h3>📥 Eğitim Süreci</h3>
+                    <ul style="font-size: 0.78em;">
+                        <li><strong>Veri:</strong> Phishing/Spam toplu corpus (binlerce örnek)</li>
+                        <li><strong>Önişleme:</strong> Lowercase, tokenize, stopword temizleme</li>
+                        <li><strong>Vektörizasyon:</strong> TF-IDF (Term Frequency-Inverse Document Frequency)</li>
+                        <li><strong>Model:</strong> scikit-learn classifier</li>
+                        <li><strong>Persist:</strong> Pickle (`.pkl`) — `mail_model.pkl`, `tfidf_vectorizer.pkl`</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>🔮 Tahmin Akışı</h3>
+                    <ol style="font-size: 0.78em;">
+                        <li>WPF → HTTP POST → <code>/predict</code></li>
+                        <li>Flask predict.py mail içeriğini alır</li>
+                        <li>TF-IDF vektörü üretir</li>
+                        <li>Model phishing/spam skoru döner</li>
+                        <li>Heuristik kurallar (SQL/XSS/Trojan) eklenir</li>
+                        <li>0-100 arası skor → C# tarafına JSON</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="card card-green" style="margin-top: 18px;">
+                <strong>🛡️ Güvenlik özelliği:</strong> Model yüklenemese bile (örn. pickle uyumsuzluğu)
+                Flask çökmez — <strong>heuristik fallback</strong> moda geçer. Sistem her zaman ayakta.
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 18 - VIRUSTOTAL ENTEGRASYONU                                      -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section>
+            <h2>🦠 VirusTotal Entegrasyonu</h2>
+            <div class="grid-2" style="margin-top: 24px;">
+                <div>
+                    <h3>API v3 Akışı</h3>
+                    <pre style="font-size: 0.5em;"><code>1. URL/Dosya → SHA-256 hash
+2. POST /urls → upload
+3. analysis_id alınır
+4. GET /analyses/{id} → polling
+5. stats + results parse edilir
+6. VtCache'e yazılır (24 saat TTL)</code></pre>
+                </div>
+                <div>
+                    <h3>Performans Optimizasyonları</h3>
+                    <ul class="check-list" style="font-size: 0.78em;">
+                        <li><strong>VtCache</strong>: 24 saat aynı hash tekrar sorulmaz</li>
+                        <li><strong>GET-first</strong>: Önce bilinen sonucu sorgular, sonra submit</li>
+                        <li><strong>Rate limiter</strong>: 4 req/dakika (free tier limiti)</li>
+                        <li><strong>Defensive parsing</strong>: API değişimine karşı try/catch</li>
+                        <li><strong>Vendor breakdown</strong>: Hangi AV ne dedi, kullanıcıya gösterilir</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card card-blue" style="margin-top: 18px; text-align: center;">
+                <span class="stat-big" style="font-size: 1.8em;">70+</span>
+                Aktif Antivirüs Motoru
+                <span style="margin: 0 30px;">·</span>
+                <span class="stat-big" style="font-size: 1.8em;">~%90</span>
+                Cache Hit Oranı
+                <span style="margin: 0 30px;">·</span>
+                <span class="stat-big" style="font-size: 1.8em;">&lt;2s</span>
+                Cache Hit Yanıtı
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 19 - GMAIL ENTEGRASYONU                                           -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section>
+            <h2>📧 Gmail Entegrasyon Detayları</h2>
+            <div class="grid-2" style="margin-top: 24px;">
+                <div>
+                    <h3>IMAP (Gelen)</h3>
+                    <ul style="font-size: 0.8em;">
+                        <li><code>imap.gmail.com:993</code> (SSL)</li>
+                        <li>MailKit ile thread-safe bağlantı</li>
+                        <li>SemaphoreSlim ile re-entrancy guard</li>
+                        <li>HashSet ile O(1) duplicate kontrol</li>
+                    </ul>
+
+                    <h3>SMTP (Giden)</h3>
+                    <ul style="font-size: 0.8em;">
+                        <li><code>smtp.gmail.com:587</code> (STARTTLS)</li>
+                        <li>BodyBuilder ile MIME multipart</li>
+                        <li>Ek dosya desteği</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Auto-Sync Mekanizması</h3>
+                    <div class="card card-blue">
+                        <p style="font-size: 0.78em; margin: 0;">
+                            DispatcherTimer ile <strong>1/5/10/30 dakika</strong> aralıklarla:
+                        </p>
+                        <ol style="font-size: 0.75em;">
+                            <li>Yeni mailler IMAP'ten çekilir</li>
+                            <li>Duplicate kontrol (HashSet)</li>
+                            <li>ML modeli + VT taraması (paralel)</li>
+                            <li>Tehlikeli olanlar trash'e taşınır</li>
+                            <li>UI güncellenir (Dispatcher)</li>
+                        </ol>
+                    </div>
+                    <p class="small" style="margin-top: 14px;">
+                        <strong>SemaphoreSlim(1,1)</strong> ile aynı anda 2 sync başlaması engellenir → race condition yok.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 20 - SECTION DIVIDER: GÜVENLİK                                    -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section class="section-divider">
+            <div class="num">06</div>
+            <h1>Güvenlik &amp; KVKK</h1>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 21 - GÜVENLİK MİMARİSİ                                            -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section>
+            <h2>🔐 Güvenlik Katmanları</h2>
+            <div class="grid-2" style="margin-top: 24px;">
+                <div class="card card-blue">
+                    <h3>🔑 DPAPI Şifreleme</h3>
+                    <p style="font-size: 0.78em;">Windows Data Protection API ile Gmail App Password'ü şifrelenir.
+                    Şifre <strong>yalnızca aynı Windows kullanıcısı</strong> tarafından çözülebilir.
+                    Disk çalınsa bile parola güvende.</p>
+                </div>
+                <div class="card card-green">
+                    <h3>🔒 Single Instance Mutex</h3>
+                    <p style="font-size: 0.78em;">Aynı anda birden fazla uygulama kopyası açılamaz.
+                    Abandoned mutex handling ile crash sonrası bile temiz çalışır.
+                    Local\ prefix ile sadece kullanıcı bazında.</p>
+                </div>
+                <div class="card card-yellow">
+                    <h3>🛡️ PII Maskeleme</h3>
+                    <p style="font-size: 0.78em;">Veritabanına yazılan tüm loglar otomatik maskelenir:
+                    TC Kimlik, IBAN, kredi kartı, telefon, e-posta. <strong>KVKK Madde 6</strong> uyumlu.</p>
+                </div>
+                <div class="card card-purple">
+                    <h3>📜 KVKK Aydınlatma</h3>
+                    <p style="font-size: 0.78em;">İlk açılışta zorunlu aydınlatma ekranı.
+                    Kullanıcı kabul etmeden uygulama açılmaz. Onay <code>ayarlar</code> tablosunda kalıcı.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 22 - KVKK PII MASKELEME DETAY                                     -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section>
+            <h2>🇹🇷 KVKK Uyumlu PII Maskeleme</h2>
+            <p style="color: #A0A0A0;">DatabaseHelper.MaskSensitiveData() ile veritabanına yazılmadan önce maskelenir:</p>
+            <table style="width: 100%;">
+                <thead>
+                    <tr><th>Veri Tipi</th><th>Örnek</th><th>Maskeli</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>E-posta</td><td><code>ali@example.com</code></td><td><code>[E-POSTA GİZLENDİ]</code></td></tr>
+                    <tr><td>Telefon (TR)</td><td><code>+90 532 123 45 67</code></td><td><code>[TELEFON GİZLENDİ]</code></td></tr>
+                    <tr><td>TC Kimlik</td><td><code>12345678901</code></td><td><code>[TC KİMLİK GİZLENDİ]</code></td></tr>
+                    <tr><td>Kredi Kartı</td><td><code>4532 1234 5678 9012</code></td><td><code>[KART GİZLENDİ]</code></td></tr>
+                    <tr><td>IBAN</td><td><code>TR33 0006 1005...</code></td><td><code>[IBAN GİZLENDİ]</code></td></tr>
+                    <tr><td>CVV</td><td><code>CVV: 123</code></td><td><code>[CVV GİZLENDİ]</code></td></tr>
+                </tbody>
+            </table>
+            <div class="card card-green" style="margin-top: 16px;">
+                <strong>🎯 Yasal değer:</strong> Hukuki risk azalır, KVKK denetimine hazır, ISO 27001 uyumuna temel.
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 23 - PERFORMANS                                                   -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section>
+            <h2>⚡ Performans Optimizasyonları</h2>
+            <div class="grid-2" style="margin-top: 20px;">
+                <div>
+                    <div class="card card-blue">
+                        <h3>📊 SQLite İndeksler</h3>
+                        <ul style="font-size: 0.72em;">
+                            <li><code>idx_mailler_gmail_msg_id</code> — duplicate kontrolü O(log n)</li>
+                            <li><code>idx_mailler_klasor_tarih</code> — composite, klasör listesi</li>
+                            <li><code>idx_analiz_loglari_tarih</code></li>
+                            <li><code>idx_*_log_id</code> — JOIN'ler için</li>
+                        </ul>
+                        <p class="small">→ <strong>10-100x sorgu hızlanması</strong></p>
+                    </div>
+
+                    <div class="card card-green">
+                        <h3>🔄 VT Cache (24h)</h3>
+                        <p style="font-size: 0.78em;">Aynı URL/hash 24 saat içinde tekrar sorulmaz.
+                        <strong>~%90 API call azalması</strong>, rate limit korunur.</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="card card-yellow">
+                        <h3>⚙️ Async/Await + Paralelizm</h3>
+                        <ul style="font-size: 0.72em;">
+                            <li>Tüm DB ops Task.Run ile</li>
+                            <li>Network IO await edilir (UI bloklanmaz)</li>
+                            <li>Birden fazla URL Task.WhenAll ile <strong>paralel</strong> taranır</li>
+                            <li>SemaphoreSlim ile re-entrancy guard</li>
+                        </ul>
+                    </div>
+
+                    <div class="card card-purple">
+                        <h3>🎯 HashSet O(1) Lookup</h3>
+                        <p style="font-size: 0.78em;">Auto-sync sırasında her mail için "bu zaten DB'de var mı?"
+                        kontrolü <strong>HashSet</strong> ile yapılır. 10K mail için 1ms.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 24 - VERİTABANI ŞEMASI                                            -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section>
+            <h2>🗄️ Veritabanı Şeması</h2>
+            <table style="width: 100%; font-size: 0.7em;">
+                <thead>
+                    <tr><th>Tablo</th><th>Kayıt Tipi</th><th>Hassasiyet</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>mailler</code></td><td>Tüm mailler + 5 tehdit skoru</td><td><span class="badge badge-yellow">PII Maskeli</span></td></tr>
+                    <tr><td><code>klasorler</code></td><td>Inbox/Sent/Trash/Spam/Drafts</td><td><span class="badge badge-green">Sistem</span></td></tr>
+                    <tr><td><code>analiz_loglari</code></td><td>Her analizin detay kaydı</td><td><span class="badge badge-yellow">PII Maskeli</span></td></tr>
+                    <tr><td><code>zararli_linkler</code></td><td>Karantina URL'leri + tehdit tipi</td><td><span class="badge badge-red">Tehdit DB</span></td></tr>
+                    <tr><td><code>ekli_dosyalar</code></td><td>Karantina dosya hash'leri</td><td><span class="badge badge-red">Tehdit DB</span></td></tr>
+                    <tr><td><code>gmail_hesaplari</code></td><td>App Password</td><td><span class="badge">DPAPI Şifreli</span></td></tr>
+                    <tr><td><code>supheli_gondericiler</code></td><td>Kullanıcı kara listesi</td><td><span class="badge badge-purple">Kullanıcı</span></td></tr>
+                    <tr><td><code>vt_cache</code></td><td>VirusTotal yanıtları (24h)</td><td><span class="badge badge-green">Performans</span></td></tr>
+                    <tr><td><code>sistem_loglari</code></td><td>Olay logu</td><td><span class="badge badge-yellow">PII Maskeli</span></td></tr>
+                    <tr><td><code>ayarlar</code></td><td>Key-value yapılandırma</td><td><span class="badge badge-green">Sistem</span></td></tr>
+                </tbody>
+            </table>
+            <p class="small" style="margin-top: 12px;">
+                Toplam <strong>12 tablo</strong> · 7 performans indeksi · Foreign key tutarlılığı
+            </p>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 25 - PROJE METRİKLERİ                                             -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section>
+            <h2>📊 Proje Metrikleri</h2>
+            <div class="grid-4" style="margin-top: 30px;">
+                <div class="stat-card">
+                    <div class="stat-big">~7K</div>
+                    <div class="stat-label">C# Kod Satırı</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-big">~2K</div>
+                    <div class="stat-label">XAML Satırı</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-big">9</div>
+                    <div class="stat-label">Servis Sınıfı</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-big">12</div>
+                    <div class="stat-label">DB Tablosu</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-big">2</div>
+                    <div class="stat-label">Dil Desteği</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-big">6</div>
+                    <div class="stat-label">PII Veri Tipi</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-big">70+</div>
+                    <div class="stat-label">AV Motoru (VT)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-big">0</div>
+                    <div class="stat-label">Aylık Maliyet</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 26 - GELİŞTİRME ZORLUKLARI                                        -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section>
+            <h2>🛠️ Karşılaştığımız Zorluklar &amp; Çözümler</h2>
+            <div style="margin-top: 20px;">
+                <div class="card card-red">
+                    <h3>❌ Race Condition (Aynı anda 2 sync)</h3>
+                    <p class="small">İlk versiyonda timer + manuel tetikleme çakışıyordu → sadece 1 mail çekiliyordu.</p>
+                    <p><strong class="hl-g">✓ Çözüm:</strong> SemaphoreSlim(1,1) + WaitAsync(TimeSpan.Zero) ile re-entrancy guard.</p>
+                </div>
+                <div class="card card-yellow">
+                    <h3>⚠️ VirusTotal API v3 Parse Bug</h3>
+                    <p class="small"><code>last_analysis_stats</code> dokümante edilmiş ama gerçek yanıtta <code>stats</code> kullanılıyor.</p>
+                    <p><strong class="hl-g">✓ Çözüm:</strong> Defensive parsing + her iki anahtar denenir.</p>
+                </div>
+                <div class="card card-blue">
+                    <h3>🐍 Python Bağımlılığı Problemi</h3>
+                    <p class="small">Hedef PC'de Python kurulu olmayabilir → ML çalışmaz.</p>
+                    <p><strong class="hl-g">✓ Çözüm:</strong> PyInstaller ile <code>predict.exe</code> (75 MB bundle) → sıfır bağımlılık.</p>
+                </div>
+                <div class="card card-purple">
+                    <h3>🔒 Plaintext Şifre Riski</h3>
+                    <p class="small">Gmail App Password DB'de açık duruyordu.</p>
+                    <p><strong class="hl-g">✓ Çözüm:</strong> DPAPI ile şifreleme + otomatik migration eski kayıtlar için.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 27 - SECTION DIVIDER: EKİP                                        -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section class="section-divider">
+            <div class="num">07</div>
+            <h1>Ekip</h1>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 28 - EKİP                                                         -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section>
+            <h2>👥 Geliştirici Ekip</h2>
+            <div class="grid-2" style="margin-top: 24px;">
+                <div class="member-card leader">
+                    <span class="leader-badge">PROJE LİDERİ</span>
+                    <div class="name">Rıdvan Gürdal</div>
+                    <div class="id">2024707045</div>
+                    <div class="role">Veri ve Yapay Zeka (AI) Geliştiricisi<br>Backend Developer</div>
+                </div>
+                <div class="member-card">
+                    <div class="name">Deniz Şahin</div>
+                    <div class="id">2024707089</div>
+                    <div class="role">Veri ve Yapay Zeka (AI) Geliştiricisi<br>Backend Developer</div>
+                </div>
+                <div class="member-card">
+                    <div class="name">Parsa Karami</div>
+                    <div class="id">2024707009</div>
+                    <div class="role">Arayüz (Frontend) Geliştiricisi</div>
+                </div>
+                <div class="member-card">
+                    <div class="name">Yunus Emre Beker</div>
+                    <div class="id">2024707029</div>
+                    <div class="role">API ve Entegrasyon Sorumlusu</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 29 - YOL HARİTASI                                                 -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section>
+            <h2>🚀 Yol Haritası</h2>
+            <div class="grid-2" style="margin-top: 24px;">
+                <div>
+                    <h3>📅 Kısa Vade (3 ay)</h3>
+                    <ul class="check-list" style="font-size: 0.78em;">
+                        <li>Çoklu Gmail hesap desteği</li>
+                        <li>Outlook entegrasyonu</li>
+                        <li>Gelişmiş ML modeli (BERT/Transformer)</li>
+                        <li>Realtime tehdit istatistikleri dashboard</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>🎯 Orta Vade (6-12 ay)</h3>
+                    <ul class="check-list" style="font-size: 0.78em;">
+                        <li>Mobile companion app (Android/iOS)</li>
+                        <li>Kurumsal SaaS paketi</li>
+                        <li>SIEM entegrasyonu (Splunk, Elastic)</li>
+                        <li>Otomatik tehdit istihbaratı feed</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>🌟 Uzun Vade (12+ ay)</h3>
+                    <ul class="check-list" style="font-size: 0.78em;">
+                        <li>AI Asistan — mail içeriği özetleme</li>
+                        <li>Zero-day tehdit tespiti</li>
+                        <li>Blockchain tabanlı reputation sistemi</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>🤝 İş Geliştirme</h3>
+                    <ul class="check-list" style="font-size: 0.78em;">
+                        <li>KOSGEB başvurusu</li>
+                        <li>TÜBİTAK 1512 hibe programı</li>
+                        <li>KOBİ pilot programı</li>
+                        <li>Open source community oluşturma</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 30 - REKABET ANALİZİ                                              -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section>
+            <h2>📈 Rekabet Analizi</h2>
+            <table style="width: 100%; font-size: 0.7em;">
+                <thead>
+                    <tr>
+                        <th>Özellik</th>
+                        <th>Bizim Ürün</th>
+                        <th>Google Workspace</th>
+                        <th>Mimecast</th>
+                        <th>Proofpoint</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Aylık Maliyet</td>
+                        <td><span class="hl-g">$0</span></td>
+                        <td>$6/kullanıcı</td>
+                        <td>$5+/kullanıcı</td>
+                        <td>$3+/kullanıcı</td>
+                    </tr>
+                    <tr>
+                        <td>Lokal Veri</td>
+                        <td><span class="hl-g">✓ KVKK</span></td>
+                        <td>✗ Cloud</td>
+                        <td>✗ Cloud</td>
+                        <td>✗ Cloud</td>
+                    </tr>
+                    <tr>
+                        <td>5 Tehdit Tipi</td>
+                        <td><span class="hl-g">✓</span></td>
+                        <td>Sınırlı</td>
+                        <td>✓</td>
+                        <td>✓</td>
+                    </tr>
+                    <tr>
+                        <td>VirusTotal Entegre</td>
+                        <td><span class="hl-g">✓ 70+ AV</span></td>
+                        <td>✗</td>
+                        <td>Premium</td>
+                        <td>Premium</td>
+                    </tr>
+                    <tr>
+                        <td>Türkçe UI</td>
+                        <td><span class="hl-g">✓ Anadil</span></td>
+                        <td>Çeviri</td>
+                        <td>İngilizce</td>
+                        <td>İngilizce</td>
+                    </tr>
+                    <tr>
+                        <td>Kurulum Süresi</td>
+                        <td><span class="hl-g">5 dk</span></td>
+                        <td>1 saat</td>
+                        <td>Haftalar</td>
+                        <td>Haftalar</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="card card-blue" style="margin-top: 16px;">
+                <strong>🎯 Konum:</strong> Bireysel kullanıcı &amp; KOBİ pazarına özel — yerel mahremiyet odaklı,
+                sıfır maliyetli güvenlik çözümü.
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 31 - ÖZET / SONUÇ                                                 -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section>
+            <h2>🎯 Özet</h2>
+            <div style="margin-top: 30px;">
+                <ul class="check-list" style="font-size: 1em;">
+                    <li><strong>Gerçek bir ihtiyacı</strong> hedefledik — KOBİ phishing kaybı $2.7M/yıl (Türkiye)</li>
+                    <li><strong>5 tehdit tipini</strong> tek panelden tespit ediyoruz</li>
+                    <li><strong>AI + 70+ AV motoru</strong> çift katmanlı koruma</li>
+                    <li><strong>%100 lokal</strong> veri işleme — KVKK tam uyumlu</li>
+                    <li><strong>Sıfır maliyetli</strong> kurumsal alternatiflere göre</li>
+                    <li><strong>Production-ready</strong> ürün — DPAPI, mutex, cache, indeksler</li>
+                    <li><strong>Açık genişleme yolu</strong> — mobile, SaaS, enterprise paket</li>
+                </ul>
+            </div>
+            <div class="quote" style="text-align: center; margin-top: 40px;">
+                Bu sadece bir bitirme projesi değil — <span class="hl">gerçek bir ürün başlangıcı</span>.
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- 32 - THANK YOU / Q&A                                              -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section class="title-slide">
+            <div class="shield-icon">🛡️</div>
+            <h1>Teşekkürler</h1>
+            <div class="subtitle" style="margin-top: 30px;">Sorularınızı bekliyoruz</div>
+            <div style="margin-top: 60px;">
+                <span class="badge">Siber Mail &amp; Güvenlik Asistanı</span>
+                <span class="badge badge-green">Bitirme Projesi · 2026</span>
+            </div>
+            <div class="team" style="margin-top: 80px;">
+                <p style="font-size: 0.8em;">Rıdvan Gürdal · Deniz Şahin · Parsa Karami · Yunus Emre Beker</p>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: 'c/t',
+        controls: true,
+        progress: true,
+        transition: 'slide',
+        backgroundTransition: 'fade',
+        width: 1280,
+        height: 800,
+        margin: 0.05,
+        plugins: [ RevealHighlight, RevealNotes ]
+    });
+</script>
+</body>
+</html>

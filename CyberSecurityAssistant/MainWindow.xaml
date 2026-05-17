@@ -2,41 +2,272 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        Title="SiberBelediye Kalkanı"
-        Height="580" Width="1040" 
+        Title="Siber Mail &amp; Güvenlik Asistanı"
+        Height="750" Width="1200" 
         Background="Transparent"
         WindowStyle="None"
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
-        MouseDown="Window_MouseDown">
+        MouseDown="Window_MouseDown"
+        Loaded="Window_Loaded">
 
     <Window.Resources>
+        <!-- Modern Color Palette -->
+        <SolidColorBrush x:Key="ModernBackground" Color="#1E1E1E"/>
+        <SolidColorBrush x:Key="ModernCard" Color="#252525"/>
+        <SolidColorBrush x:Key="ModernCardHover" Color="#2D2D2D"/>
+        <SolidColorBrush x:Key="ModernBorder" Color="#3A3A3A"/>
+        <SolidColorBrush x:Key="ModernTextPrimary" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="ModernTextSecondary" Color="#A0A0A0"/>
+        <SolidColorBrush x:Key="ModernTextMuted" Color="#666666"/>
+        
+        <!-- Pastel Accent Colors -->
+        <SolidColorBrush x:Key="AccentGreen" Color="#4ADE80"/>
+        <SolidColorBrush x:Key="AccentBlue" Color="#60A5FA"/>
+        <SolidColorBrush x:Key="AccentRed" Color="#F87171"/>
+        <SolidColorBrush x:Key="AccentYellow" Color="#FBBF24"/>
+        
+        <!-- Avatar Colors -->
+        <SolidColorBrush x:Key="AvatarColor1" Color="#FF6B6B"/>
+        <SolidColorBrush x:Key="AvatarColor2" Color="#4ECDC4"/>
+        <SolidColorBrush x:Key="AvatarColor3" Color="#45B7D1"/>
+        <SolidColorBrush x:Key="AvatarColor4" Color="#96CEB4"/>
+        <SolidColorBrush x:Key="AvatarColor5" Color="#FFEAA7"/>
+        <SolidColorBrush x:Key="AvatarColor6" Color="#DDA0DD"/>
+        <SolidColorBrush x:Key="AvatarColor7" Color="#98D8C8"/>
+        <SolidColorBrush x:Key="AvatarColor8" Color="#F7DC6F"/>
+
         <Storyboard x:Key="PulseAnimation" RepeatBehavior="Forever" AutoReverse="True">
             <DoubleAnimation Storyboard.TargetName="ShieldGlow" Storyboard.TargetProperty="Opacity" From="0.3" To="1.0" Duration="0:0:0.5" />
             <DoubleAnimation Storyboard.TargetName="ShieldGlow" Storyboard.TargetProperty="BlurRadius" From="20" To="60" Duration="0:0:0.5" />
         </Storyboard>
 
-        <Style x:Key="TabButton" TargetType="Button">
+        <!-- Modern ScrollBar Style -->
+        <Style TargetType="ScrollBar">
+            <Setter Property="Width" Value="6"/>
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#A0A0A0"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Margin" Value="0,0,15,0"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" Padding="15,8" CornerRadius="5">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Grid>
+                            <Track x:Name="PART_Track" IsDirectionReversed="True">
+                                <Track.Thumb>
+                                    <Thumb>
+                                        <Thumb.Template>
+                                            <ControlTemplate TargetType="Thumb">
+                                                <Border Background="#4A4A4A" CornerRadius="3" Margin="1"/>
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Width" Value="8"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Modern DataGrid Style -->
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="RowBackground" Value="Transparent"/>
+            <Setter Property="AlternatingRowBackground" Value="#1A1A1A"/>
+            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#2A2A2A"/>
+            <Setter Property="RowHeight" Value="40"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="SelectionMode" Value="Single"/>
+            <Setter Property="CanUserResizeRows" Value="False"/>
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#2A2A2A"/>
+            <Setter Property="Foreground" Value="#A0A0A0"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="BorderBrush" Value="#3A3A3A"/>
+        </Style>
+
+        <Style TargetType="DataGridCell">
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="#D0D0D0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DataGridCell">
+                        <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center"/>
                         </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#333333"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="DataGridRow">
+            <Setter Property="Background" Value="Transparent"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#1F1F1F"/>
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#2A2A2A"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Modern TextBox Style -->
+        <Style x:Key="ModernTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="#1A1A1A"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="BorderBrush" Value="#3A3A3A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#60A5FA"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#4A4A4A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
+        <!-- Modern Button Base -->
+        <Style x:Key="ModernButtonBase" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#3A3A3A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Typographic Styles -->
+        <Style x:Key="TitleText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
+
+        <Style x:Key="SubtitleText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Foreground" Value="#A0A0A0"/>
+        </Style>
+
+        <Style x:Key="BodyText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Foreground" Value="#D0D0D0"/>
+        </Style>
+
+        <Style x:Key="CaptionText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Foreground" Value="#666666"/>
+        </Style>
+
+        <Style x:Key="TabHeaderButton" TargetType="RadioButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#A0A0A0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Padding" Value="20,10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="TabBorder" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" CornerRadius="5,5,0,0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="TabBorder" Property="Background" Value="#1A1C1E"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="FolderButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#A0A0A0"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="FolderBorder" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" CornerRadius="5" Margin="5,2">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="FolderBorder" Property="Background" Value="#1AFFFFFF"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ActiveFolderButton" TargetType="Button" BasedOn="{StaticResource FolderButton}">
+            <Setter Property="Background" Value="#333333"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
         <Style x:Key="GlowScanButton" TargetType="Button">
             <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Height" Value="45"/>
             <Setter Property="Cursor" Value="Hand"/>
@@ -78,29 +309,56 @@
             </Setter>
         </Style>
 
+        <Style x:Key="AnalyzeButton" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="AnalyzeBorder" CornerRadius="10">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="#3B82F6" Offset="0.0"/>
+                                    <GradientStop Color="#1D4ED8" Offset="1.0"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="20" Color="#3B82F6" Opacity="0.8" ShadowDepth="0"/>
+                            </Border.Effect>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="AnalyzeBorder" Storyboard.TargetProperty="(Border.Effect).(DropShadowEffect.BlurRadius)" To="30" Duration="0:0:0.15"/>
+                                        <DoubleAnimation Storyboard.TargetName="AnalyzeBorder" Storyboard.TargetProperty="(Border.Effect).(DropShadowEffect.Opacity)" To="1" Duration="0:0:0.15"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="AnalyzeBorder" Storyboard.TargetProperty="(Border.Effect).(DropShadowEffect.BlurRadius)" To="20" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="AnalyzeBorder" Storyboard.TargetProperty="(Border.Effect).(DropShadowEffect.Opacity)" To="0.8" Duration="0:0:0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="StatusCard" TargetType="Border">
-            <Setter Property="Background" Value="#661E1E1E"/>
+            <Setter Property="Background" Value="#252525"/>
             <Setter Property="CornerRadius" Value="8"/>
             <Setter Property="Padding" Value="15"/>
             <Setter Property="BorderBrush" Value="#444"/>
             <Setter Property="BorderThickness" Value="1"/>
-        </Style>
-
-        <Style x:Key="ModernProgressBar" TargetType="ProgressBar">
-            <Setter Property="Foreground" Value="#22C55E"/>
-            <Setter Property="Background" Value="#333333"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ProgressBar">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="3">
-                            <Grid x:Name="PART_Track">
-                                <Border x:Name="PART_Indicator" Background="{TemplateBinding Foreground}" HorizontalAlignment="Left" CornerRadius="3"/>
-                            </Grid>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
         </Style>
 
         <Style x:Key="GhostButton" TargetType="Button">
@@ -111,13 +369,360 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="GhostBorder" Background="{TemplateBinding Background}" CornerRadius="5" Padding="{TemplateBinding Padding}">
+                        <Border x:Name="GhostBorder" Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="GhostBorder" Property="Background" Value="#1AFFFFFF"/>
+                                <Setter TargetName="GhostBorder" Property="Background" Value="#2A2A2A"/>
                                 <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="GhostBorder" Property="Background" Value="#333333"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="InputTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="#1A1A1A"/>
+            <Setter Property="Foreground" Value="#D0D0D0"/>
+            <Setter Property="BorderBrush" Value="#3A3A3A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="0"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#60A5FA"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ScannerTabButton" TargetType="RadioButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#A0A0A0"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="ScannerTabBorder" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="ScannerTabBorder" Property="Background" Value="#333333"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Dark ScrollBar — ince, yuvarlak köşeli, hover'da renklenir -->
+        <Style x:Key="DarkScrollBarThumb" TargetType="Thumb">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Thumb">
+                        <Border x:Name="ThumbBorder"
+                                Background="#3A3D42"
+                                CornerRadius="3"
+                                Margin="2,0"/>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ThumbBorder" Property="Background" Value="#5A5D62"/>
+                            </Trigger>
+                            <Trigger Property="IsDragging" Value="True">
+                                <Setter TargetName="ThumbBorder" Property="Background" Value="#3B82F6"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="DarkScrollBar" TargetType="ScrollBar">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Width" Value="10"/>
+            <Setter Property="MinWidth" Value="10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Grid Background="Transparent">
+                            <Track x:Name="PART_Track" IsDirectionReversed="True">
+                                <Track.Thumb>
+                                    <Thumb Style="{StaticResource DarkScrollBarThumb}"/>
+                                </Track.Thumb>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="False"/>
+                                </Track.IncreaseRepeatButton>
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="False"/>
+                                </Track.DecreaseRepeatButton>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Dark ScrollViewer — özel scrollbar kullanır, native gri çubuğu gizler -->
+        <Style x:Key="DarkScrollViewer" TargetType="ScrollViewer">
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollViewer">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ScrollContentPresenter Grid.Column="0"
+                                                    Margin="{TemplateBinding Padding}"
+                                                    Content="{TemplateBinding Content}"
+                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                    CanContentScroll="{TemplateBinding CanContentScroll}"/>
+                            <ScrollBar Grid.Column="1"
+                                       x:Name="PART_VerticalScrollBar"
+                                       Style="{StaticResource DarkScrollBar}"
+                                       Value="{TemplateBinding VerticalOffset}"
+                                       Maximum="{TemplateBinding ScrollableHeight}"
+                                       ViewportSize="{TemplateBinding ViewportHeight}"
+                                       Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                       Margin="2,4,2,4"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- DataGrid satır stili — dark, hover'da vurgulu -->
+        <Style x:Key="DarkDataGridRow" TargetType="DataGridRow">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#D0D0D0"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="32"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#252830"/>
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#1E3A8A"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+                <Trigger Property="AlternationIndex" Value="1">
+                    <Setter Property="Background" Value="#181B1F"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- DataGrid hücre stili — kenarsız, padding'li -->
+        <Style x:Key="DarkDataGridCell" TargetType="DataGridCell">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#D0D0D0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DataGridCell">
+                        <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- DataGrid column header stili — koyu, sade -->
+        <Style x:Key="DarkDataGridColumnHeader" TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#15171B"/>
+            <Setter Property="Foreground" Value="#A0A0A0"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="BorderBrush" Value="#2A2D31"/>
+            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        </Style>
+
+        <!-- DataGrid ana stili -->
+        <Style x:Key="DarkDataGrid" TargetType="DataGrid">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#D0D0D0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="GridLinesVisibility" Value="None"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="RowHeight" Value="32"/>
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="CanUserResizeRows" Value="False"/>
+            <Setter Property="AlternationCount" Value="2"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="SelectionMode" Value="Single"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="RowStyle" Value="{StaticResource DarkDataGridRow}"/>
+            <Setter Property="CellStyle" Value="{StaticResource DarkDataGridCell}"/>
+            <Setter Property="ColumnHeaderStyle" Value="{StaticResource DarkDataGridColumnHeader}"/>
+        </Style>
+
+        <!-- Dark ComboBoxItem stili (popup içindeki her satır) -->
+        <Style x:Key="DarkComboBoxItem" TargetType="ComboBoxItem">
+            <Setter Property="Foreground" Value="#D0D0D0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border x:Name="ItemBorder"
+                                Background="{TemplateBinding Background}"
+                                Padding="{TemplateBinding Padding}"
+                                CornerRadius="4"
+                                Margin="3,1">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="#2A2D31"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="#3B82F6"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="#1E40AF"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Dark ComboBox stili — ToggleButton + Popup + içerik -->
+        <Style x:Key="DarkComboBox" TargetType="ComboBox">
+            <Setter Property="Background" Value="#1F2226"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#3A3D42"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="ItemContainerStyle" Value="{StaticResource DarkComboBoxItem}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="32"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border x:Name="MainBorder"
+                                    Grid.ColumnSpan="2"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="6"/>
+
+                            <ContentPresenter Grid.Column="0"
+                                              Margin="{TemplateBinding Padding}"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Left"
+                                              Content="{TemplateBinding SelectionBoxItem}"
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                              IsHitTestVisible="False"/>
+
+                            <ToggleButton Grid.Column="1"
+                                          Focusable="False"
+                                          IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                          ClickMode="Press"
+                                          Background="Transparent"
+                                          BorderThickness="0"
+                                          Cursor="Hand">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border Background="Transparent">
+                                            <Path x:Name="Arrow"
+                                                  Data="M 0 0 L 8 0 L 4 5 Z"
+                                                  Fill="#A0A0A0"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Arrow" Property="Fill" Value="White"/>
+                                            </Trigger>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter TargetName="Arrow" Property="Fill" Value="#3B82F6"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+
+                            <Popup x:Name="Popup"
+                                   Placement="Bottom"
+                                   IsOpen="{TemplateBinding IsDropDownOpen}"
+                                   AllowsTransparency="True"
+                                   PopupAnimation="Slide"
+                                   Focusable="False">
+                                <Border x:Name="DropDownBorder"
+                                        Background="#1A1C1F"
+                                        BorderBrush="#3A3D42"
+                                        BorderThickness="1"
+                                        CornerRadius="6"
+                                        MinWidth="{TemplateBinding ActualWidth}"
+                                        MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                        Margin="0,4,0,0">
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="12" ShadowDepth="3" Opacity="0.5" Color="Black"/>
+                                    </Border.Effect>
+                                    <ScrollViewer Margin="3" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="BorderBrush" Value="#3B82F6"/>
+                            </Trigger>
+                            <Trigger Property="IsDropDownOpen" Value="True">
+                                <Setter TargetName="MainBorder" Property="BorderBrush" Value="#3B82F6"/>
+                                <Setter TargetName="MainBorder" Property="Background" Value="#252830"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -126,53 +731,906 @@
         </Style>
     </Window.Resources>
 
-    <Border Margin="20" CornerRadius="15" BorderThickness="1.5">
+    <Border Margin="15" CornerRadius="16" BorderThickness="1.5">
         <Border.Background>
-            <SolidColorBrush Color="#121212" Opacity="0.85"/>
+            <RadialGradientBrush Center="0.2,0.05" GradientOrigin="0.2,0.05" RadiusX="1.4" RadiusY="1.4">
+                <GradientStop Color="#1A2238" Offset="0.0"/>
+                <GradientStop Color="#15182A" Offset="0.45"/>
+                <GradientStop Color="#0E1018" Offset="1.0"/>
+            </RadialGradientBrush>
         </Border.Background>
         <Border.BorderBrush>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#40FFFFFF" Offset="0.0"/>
-                <GradientStop Color="#05FFFFFF" Offset="1.0"/>
+                <GradientStop Color="#5060A5FA" Offset="0.0"/>
+                <GradientStop Color="#10A855F7" Offset="0.5"/>
+                <GradientStop Color="#08FFFFFF" Offset="1.0"/>
             </LinearGradientBrush>
         </Border.BorderBrush>
         <Border.Effect>
-            <DropShadowEffect BlurRadius="30" ShadowDepth="10" Opacity="0.7" Color="Black" Direction="270"/>
+            <DropShadowEffect BlurRadius="40" ShadowDepth="12" Opacity="0.85" Color="#0A0E1A" Direction="270"/>
         </Border.Effect>
 
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="90"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,15,0">
+            <!-- Title Bar -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,8,10,0">
                 <Button Content="TR" Click="LangTR_Click" Background="Transparent" Foreground="#A0A0A0" FontWeight="Bold" BorderThickness="0" Cursor="Hand" Margin="0,0,5,0"/>
                 <TextBlock Text="|" Foreground="#555" VerticalAlignment="Center" Margin="0,0,5,0"/>
                 <Button Content="EN" Click="LangEN_Click" Background="Transparent" Foreground="#A0A0A0" FontWeight="Bold" BorderThickness="0" Cursor="Hand" Margin="0,0,5,0"/>
 
-                <Button Margin="0,0,5,0" Foreground="#A0A0A0" Background="Transparent" BorderThickness="0" Cursor="Hand" Click="OpenSettings_Click">
+                <Button Margin="0,0,5,0" Foreground="#A0A0A0" Background="Transparent" BorderThickness="0" Cursor="Hand" Click="OpenSettings_Click" ToolTip="Ayarlar">
                     <iconPacks:PackIconMaterial Kind="Cog" Width="16" Height="16"/>
                 </Button>
 
-                <Button Content="—" Foreground="Gray" Background="Transparent" BorderThickness="0" Width="30" Cursor="Hand" Click="Minimize_Click"/>
+                <!-- Hakkında (About) — proje ekibi, versiyon, lisanslar -->
+                <Button Margin="0,0,5,0" Foreground="#A0A0A0" Background="Transparent" BorderThickness="0" Cursor="Hand" Click="ShowAbout_Click" ToolTip="Hakkında">
+                    <iconPacks:PackIconMaterial Kind="InformationOutline" Width="16" Height="16"/>
+                </Button>
 
+                <Button Content="—" Foreground="Gray" Background="Transparent" BorderThickness="0" Width="30" Cursor="Hand" Click="Minimize_Click"/>
                 <Button x:Name="MaximizeBtn" Foreground="Gray" Background="Transparent" BorderThickness="0" Width="30" Cursor="Hand" Click="Maximize_Click">
                     <iconPacks:PackIconMaterial x:Name="MaximizeIcon" Kind="WindowMaximize" Width="12" Height="12"/>
                 </Button>
-
                 <Button Content="✕" Foreground="Gray" Background="Transparent" BorderThickness="0" Width="30" Cursor="Hand" Click="Close_Click"/>
             </StackPanel>
 
-            <Grid Grid.Row="1" Margin="20,10,20,10">
+            <!-- Tab Headers -->
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="20,5,20,0">
+                <RadioButton x:Name="TabMail" Content="{DynamicResource TabMailApp}" Style="{StaticResource TabHeaderButton}" IsChecked="True" Checked="TabMail_Checked"/>
+                <RadioButton x:Name="TabScanner" Content="{DynamicResource TabScannerApp}" Style="{StaticResource TabHeaderButton}" Checked="TabScanner_Checked"/>
+            </StackPanel>
+
+            <!-- Content Area -->
+            <Grid Grid.Row="2" Margin="20,10,20,10">
+                <!-- MAIL APP TAB -->
+                <Grid x:Name="MailAppPanel" Visibility="Visible">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="300"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Sol Panel: Klasörler -->
+                    <Border Grid.Column="0" Background="#252525" CornerRadius="10" Padding="10" BorderBrush="#3A3A3A" BorderThickness="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Button x:Name="NewMailButton" Grid.Row="0" Style="{StaticResource GlowScanButton}" Margin="5,5,5,15" Click="NewMail_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <iconPacks:PackIconMaterial Kind="EmailPlus" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{DynamicResource BtnNewMail}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+
+                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                                <StackPanel>
+                                    <Button x:Name="BtnInbox" Style="{StaticResource FolderButton}" Click="FolderInbox_Click">
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconMaterial Kind="Inbox" Margin="0,0,10,0" Width="16" Height="16"/>
+                                            <TextBlock Text="{DynamicResource Inbox}"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button x:Name="BtnSent" Style="{StaticResource FolderButton}" Click="FolderSent_Click">
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconMaterial Kind="Send" Margin="0,0,10,0" Width="16" Height="16"/>
+                                            <TextBlock Text="{DynamicResource Sent}"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button x:Name="BtnDrafts" Style="{StaticResource FolderButton}" Click="FolderDrafts_Click">
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconMaterial Kind="FileDocumentOutline" Margin="0,0,10,0" Width="16" Height="16"/>
+                                            <TextBlock Text="{DynamicResource Drafts}"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button x:Name="BtnSpam" Style="{StaticResource FolderButton}" Click="FolderSpam_Click">
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconMaterial Kind="AlertCircleOutline" Margin="0,0,10,0" Width="16" Height="16" Foreground="#F59E0B"/>
+                                            <TextBlock Text="{DynamicResource Spam}"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button x:Name="BtnTrash" Style="{StaticResource FolderButton}" Click="FolderTrash_Click">
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconMaterial Kind="DeleteOutline" Margin="0,0,10,0" Width="16" Height="16"/>
+                                            <TextBlock Text="{DynamicResource Trash}"/>
+                                        </StackPanel>
+                                    </Button>
+
+                                    <Separator Background="#2A2A2A" Margin="8,8"/>
+
+                                    <Button x:Name="BtnSuspiciousSenders" Style="{StaticResource FolderButton}" Click="OpenSuspiciousSenders_Click" ToolTip="Şüpheli olarak işaretlediğin göndericiler — mailleri otomatik çöpe gider">
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconMaterial Kind="ShieldAccountOutline" Margin="0,0,10,0" Width="16" Height="16" Foreground="#EF4444"/>
+                                            <TextBlock Text="Şüpheli Hesaplar" Foreground="#EF4444"/>
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </ScrollViewer>
+
+                            <StackPanel Grid.Row="2" Margin="5,10,5,5">
+                                <Border Background="#1A1A1A" CornerRadius="5" Padding="10">
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                            <iconPacks:PackIconMaterial Kind="Gmail" Width="16" Height="16" Foreground="#EA4335"/>
+                                            <TextBlock Text="Gmail" Foreground="#A0A0A0" FontSize="12" Margin="8,0,0,0"/>
+                                        </StackPanel>
+                                        <TextBlock x:Name="GmailStatusText" Text="Bağlı değil" Foreground="#666" FontSize="11"/>
+                                        <TextBlock x:Name="LastSyncText" Text="Otomatik sync hazırlanıyor..." Foreground="#555" FontSize="10" Margin="0,2,0,0" TextWrapping="Wrap"/>
+                                        <Button x:Name="GmailSyncButton" Content="{DynamicResource ConnectGmail}" Style="{StaticResource GhostButton}" Margin="0,8,0,0" Padding="10,5" FontSize="11" Click="GmailSettings_Click"/>
+                                        <Button x:Name="RefreshMailsButton" Content="{DynamicResource MenuRefresh}" Style="{StaticResource GhostButton}" Margin="0,5,0,0" Padding="10,5" FontSize="11" Click="RefreshMails_Click">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="#3B82F6" CornerRadius="5" Padding="10,5">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <iconPacks:PackIconMaterial Kind="Refresh" Width="12" Height="12" Foreground="White" Margin="0,0,5,0"/>
+                                                            <TextBlock Text="Mailleri Güncelle" Foreground="White" FontSize="11"/>
+                                                        </StackPanel>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- Orta Panel: Mail Listesi -->
+                    <Border Grid.Column="1" Background="#252525" CornerRadius="10" Padding="10" BorderBrush="#3A3A3A" BorderThickness="1" Margin="10,0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Grid.Row="0" Margin="0,0,0,10">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox x:Name="SearchBox" Style="{StaticResource InputTextBox}" TextChanged="SearchBox_TextChanged"/>
+                                    <iconPacks:PackIconMaterial Grid.Column="1" Kind="Magnify" Foreground="#666" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                </Grid>
+                                <Grid Margin="0,6,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock x:Name="SelectedCountText" Grid.Column="0" Text="" Foreground="#888" FontSize="11" VerticalAlignment="Center"/>
+                                    <Button Grid.Column="1" Cursor="Hand" Background="Transparent" BorderThickness="0" Padding="6,3" Margin="0,0,6,0" Click="SelectAllMails_Click" ToolTip="Tüm görünür mailleri seç">
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconMaterial Kind="SelectAll" Width="12" Height="12" Foreground="#60A5FA" Margin="0,0,4,0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="Tümünü Seç" Foreground="#60A5FA" FontSize="11" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Grid.Column="2" Cursor="Hand" Background="Transparent" BorderThickness="0" Padding="6,3" Click="BulkDeleteMails_Click" ToolTip="Seçili mailleri sil">
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconMaterial Kind="DeleteSweepOutline" Width="12" Height="12" Foreground="#EF4444" Margin="0,0,4,0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="Toplu Sil" Foreground="#EF4444" FontSize="11" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                            </StackPanel>
+
+                            <ListBox x:Name="MailListBox" Grid.Row="1" Background="Transparent" BorderThickness="0"
+                                     SelectionMode="Extended"
+                                     SelectionChanged="MailListBox_SelectionChanged"
+                                     VirtualizingStackPanel.IsVirtualizing="True"
+                                     VirtualizingStackPanel.VirtualizationMode="Recycling"
+                                     ScrollViewer.IsDeferredScrollingEnabled="True"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                     ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                <ListBox.Template>
+                                    <ControlTemplate TargetType="ListBox">
+                                        <ScrollViewer Style="{StaticResource DarkScrollViewer}" Focusable="False">
+                                            <ItemsPresenter SnapsToDevicePixels="True"/>
+                                        </ScrollViewer>
+                                    </ControlTemplate>
+                                </ListBox.Template>
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="ListBoxItem">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                        <Setter Property="Cursor" Value="Hand"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListBoxItem">
+                                                    <Border x:Name="Bd" Background="Transparent" BorderBrush="#2A2A2A" BorderThickness="0,0,0,1" Padding="12,10">
+                                                        <ContentPresenter/>
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="Bd" Property="Background" Value="#1F1F1F"/>
+                                                        </Trigger>
+                                                        <Trigger Property="IsSelected" Value="True">
+                                                            <Setter TargetName="Bd" Property="Background" Value="#2A2A2A"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="40"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- Avatar Circle -->
+                                            <Grid>
+                                                <Ellipse Width="36" Height="36" Fill="#3A3A3A"/>
+                                                <TextBlock Text="{Binding FromName[0]}" Foreground="White" FontSize="14" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Grid>
+
+                                            <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+                                                <TextBlock x:Name="FromNameText" Text="{Binding FromName}" FontSize="13" TextTrimming="CharacterEllipsis">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Foreground" Value="#D0D0D0"/>
+                                                            <Setter Property="FontWeight" Value="Normal"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsRead}" Value="False">
+                                                                    <Setter Property="Foreground" Value="White"/>
+                                                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                                <TextBlock x:Name="SubjectText" Text="{Binding Subject}" FontSize="12" TextTrimming="CharacterEllipsis" Margin="0,2,0,0">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Foreground" Value="#666666"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsRead}" Value="False">
+                                                                    <Setter Property="Foreground" Value="#A0A0A0"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </StackPanel>
+
+                                            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                                <!-- Dinamik tehdit etiketi (badge). En yüksek skorlu kategori 40+ ise gösterilir.
+                                                     Renk: Phishing(kırmızı), Spam(turuncu), SQL Injection(mor), XSS(pembe), Trojan(indigo) -->
+                                                <Border CornerRadius="4" Padding="7,3" Margin="4,0"
+                                                        Background="{Binding ThreatBadgeBrush}"
+                                                        Visibility="{Binding ThreatBadgeVisibility}">
+                                                    <TextBlock Text="{Binding ThreatBadgeLabel}" FontSize="10" Foreground="White" FontWeight="SemiBold"/>
+                                                </Border>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+
+                            <TextBlock x:Name="EmptyMailListText" Grid.Row="1" Text="Mail bulunmuyor" Foreground="#666" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Sağ Panel: Mail Detay -->
+                    <Border Grid.Column="2" Background="#252525" CornerRadius="10" Padding="20" BorderBrush="#3A3A3A" BorderThickness="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock x:Name="MailSubject" Grid.Row="0" Text="Bir mail seçin" Foreground="White" FontSize="18" FontWeight="SemiBold" TextWrapping="Wrap" Margin="0,0,0,15"/>
+
+                            <Grid Grid.Row="1" Margin="0,0,0,15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="Kimden:" Foreground="#666" FontSize="11"/>
+                                    <TextBlock x:Name="MailFrom" Text="" Foreground="#A0A0A0" FontSize="13"/>
+                                </StackPanel>
+                                <TextBlock x:Name="MailDate" Grid.Column="1" Foreground="#666" FontSize="12" VerticalAlignment="Top"/>
+                            </Grid>
+
+                            <RichTextBox x:Name="MailBodyRich" Grid.Row="2" Background="Transparent" Foreground="#D0D0D0" FontSize="13" IsReadOnly="True" BorderThickness="0" VerticalScrollBarVisibility="Auto">
+                                <RichTextBox.Resources>
+                                    <Style TargetType="Paragraph">
+                                        <Setter Property="Margin" Value="0"/>
+                                        <Setter Property="LineHeight" Value="22"/>
+                                    </Style>
+                                </RichTextBox.Resources>
+                            </RichTextBox>
+
+                            <StackPanel Grid.Row="3" x:Name="AnalysisPanel" Visibility="Collapsed" Margin="0,15,0,0">
+                                <!-- Threat Dashboard Header -->
+                                <Border CornerRadius="10,10,0,0" Padding="14,10">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                            <GradientStop Color="#1F2937" Offset="0"/>
+                                            <GradientStop Color="#0F172A" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                    <StackPanel Orientation="Horizontal">
+                                        <iconPacks:PackIconMaterial Kind="ShieldCheck" Foreground="#60A5FA" Width="18" Height="18" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="TEHDİT ANALİZİ" Foreground="#E5E7EB" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Tag="LetterSpacing:2"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Row 1: Phishing | Spam | VirusTotal -->
+                                <Grid Margin="0,0,0,6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Grid.Column="0" CornerRadius="0" Padding="12,10" Margin="0,0,3,0" BorderThickness="1" BorderBrush="#33EF4444">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Color="#33EF4444" Offset="0"/>
+                                                <GradientStop Color="#11EF4444" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                <iconPacks:PackIconMaterial Kind="ShieldAlert" Foreground="#EF4444" Width="14" Height="14" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                                <TextBlock Text="PHISHING" Foreground="#EF4444" FontSize="10" FontWeight="Bold" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBlock x:Name="PhishingScore" Text="%0" Foreground="White" FontSize="20" FontWeight="Bold" Margin="0,3,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Grid.Column="1" CornerRadius="0" Padding="12,10" Margin="3,0" BorderThickness="1" BorderBrush="#33F59E0B">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Color="#33F59E0B" Offset="0"/>
+                                                <GradientStop Color="#11F59E0B" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                <iconPacks:PackIconMaterial Kind="AlertCircle" Foreground="#F59E0B" Width="14" Height="14" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                                <TextBlock Text="SPAM" Foreground="#F59E0B" FontSize="10" FontWeight="Bold" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBlock x:Name="SpamScore" Text="%0" Foreground="White" FontSize="20" FontWeight="Bold" Margin="0,3,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Grid.Column="2" CornerRadius="0" Padding="12,10" Margin="3,0,0,0" Cursor="Hand" MouseLeftButtonUp="VtResult_Click" BorderThickness="1" BorderBrush="#3322C55E">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Color="#3322C55E" Offset="0"/>
+                                                <GradientStop Color="#1122C55E" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                <iconPacks:PackIconMaterial Kind="Virus" Foreground="#22C55E" Width="14" Height="14" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                                <TextBlock Text="VIRUSTOTAL" Foreground="#22C55E" FontSize="10" FontWeight="Bold" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBlock x:Name="VtResult" Text="Kontrol et" Foreground="White" FontSize="14" FontWeight="Bold" Margin="0,3,0,0"/>
+                                            <TextBlock x:Name="VtDetail" Visibility="Collapsed" Text="" Foreground="#9CA3AF" FontSize="10" Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+
+                                <!-- Row 2: SQL Injection | XSS | Trojan/Malware -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Grid.Column="0" CornerRadius="0,0,0,10" Padding="12,10" Margin="0,0,3,0" BorderThickness="1" BorderBrush="#33A855F7">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Color="#33A855F7" Offset="0"/>
+                                                <GradientStop Color="#11A855F7" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                <iconPacks:PackIconMaterial Kind="DatabaseAlert" Foreground="#A855F7" Width="14" Height="14" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                                <TextBlock Text="SQL INJECTION" Foreground="#A855F7" FontSize="10" FontWeight="Bold" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBlock x:Name="SqlInjectionScore" Text="%0" Foreground="White" FontSize="20" FontWeight="Bold" Margin="0,3,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Grid.Column="1" CornerRadius="0" Padding="12,10" Margin="3,0" BorderThickness="1" BorderBrush="#33EC4899">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Color="#33EC4899" Offset="0"/>
+                                                <GradientStop Color="#11EC4899" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                <iconPacks:PackIconMaterial Kind="CodeBraces" Foreground="#EC4899" Width="14" Height="14" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                                <TextBlock Text="XSS" Foreground="#EC4899" FontSize="10" FontWeight="Bold" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBlock x:Name="XssScore" Text="%0" Foreground="White" FontSize="20" FontWeight="Bold" Margin="0,3,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Grid.Column="2" CornerRadius="0,0,10,0" Padding="12,10" Margin="3,0,0,0" BorderThickness="1" BorderBrush="#336366F1">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Color="#336366F1" Offset="0"/>
+                                                <GradientStop Color="#116366F1" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                <iconPacks:PackIconMaterial Kind="BugOutline" Foreground="#6366F1" Width="14" Height="14" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                                <TextBlock Text="TROJAN" Foreground="#6366F1" FontSize="10" FontWeight="Bold" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBlock x:Name="TrojanScore" Text="%0" Foreground="White" FontSize="20" FontWeight="Bold" Margin="0,3,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="4" x:Name="MailActionsPanel" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0" Visibility="Collapsed">
+                                <Button x:Name="RestoreToInboxButton" Style="{StaticResource GhostButton}" Padding="15,8" Margin="0,0,10,0" Foreground="#4ADE80" Visibility="Collapsed" Cursor="Hand" Click="RestoreToInbox_Click">
+                                    <StackPanel Orientation="Horizontal">
+                                        <iconPacks:PackIconMaterial Kind="InboxArrowDown" Width="14" Height="14" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Gelen Kutusuna Al" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="MarkSuspiciousButton" Style="{StaticResource GhostButton}" Padding="15,8" Margin="0,0,10,0" Foreground="#EF4444" Cursor="Hand" Click="MarkSenderAsSuspicious_Click" ToolTip="Bu göndericiyi şüpheli olarak işaretle — bundan sonra gelen tüm mailleri otomatik çöpe at">
+                                    <StackPanel Orientation="Horizontal">
+                                        <iconPacks:PackIconMaterial Kind="ShieldAccountOutline" Width="14" Height="14" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Şüpheli İşaretle" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Content="{DynamicResource BtnReply}" Style="{StaticResource GhostButton}" Padding="15,8" Margin="0,0,10,0" Click="ReplyMail_Click"/>
+                                <Button Content="{DynamicResource BtnDelete}" Style="{StaticResource GhostButton}" Padding="15,8" Foreground="#EF4444" Click="DeleteMail_Click"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <!-- SECURITY SCANNER TAB -->
+                <Grid x:Name="ScannerPanel" Visibility="Collapsed">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="350"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Sol Panel: Giriş ve Sonuç -->
+                    <Grid Grid.Column="0" Margin="0,0,10,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- MODÜL 1: Giriş Terminali -->
+                        <Border Grid.Row="0" Background="#252525" CornerRadius="10" Padding="20" BorderBrush="#3A3A3A" BorderThickness="1" Margin="0,0,0,10">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                                    <iconPacks:PackIconMaterial Kind="ShieldSearch" Foreground="#3B82F6" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Manuel Güvenlik Taraması" Foreground="White" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                </StackPanel>
+
+                                <!-- Sekme Butonları -->
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                                    <RadioButton x:Name="ScanTabText" Content="{DynamicResource ScanTabText}" Style="{StaticResource ScannerTabButton}" IsChecked="True" Checked="ScanTabText_Checked"/>
+                                    <RadioButton x:Name="ScanTabUrl" Content="{DynamicResource ScanTabUrl}" Style="{StaticResource ScannerTabButton}" Checked="ScanTabUrl_Checked"/>
+                                    <RadioButton x:Name="ScanTabFile" Content="{DynamicResource ScanTabFile}" Style="{StaticResource ScannerTabButton}" Checked="ScanTabFile_Checked"/>
+                                </StackPanel>
+
+                                <!-- Metin Kutusu -->
+                                <Grid x:Name="PanelTextInput" Visibility="Visible">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Border Background="#1A1A1A" CornerRadius="8" BorderBrush="#444" BorderThickness="1">
+                                        <Grid>
+                                            <TextBlock x:Name="TextHint" Text="{DynamicResource HintTextInput}" Foreground="#666" FontSize="13" Padding="15" IsHitTestVisible="False" Visibility="Visible"/>
+                                            <TextBox x:Name="InputTextScanner" Background="Transparent" Foreground="#D0D0D0" CaretBrush="White" BorderThickness="0" Padding="15" FontSize="13" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextChanged="InputTextScanner_TextChanged"/>
+                                        </Grid>
+                                    </Border>
+                                    <Button Grid.Row="1" Content="{DynamicResource BtnClear}" Style="{StaticResource GhostButton}" HorizontalAlignment="Right" Margin="0,10,0,0" Padding="10,5" Click="ClearInput_Click">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="#333" CornerRadius="5" Padding="10,5">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <iconPacks:PackIconMaterial Kind="DeleteOutline" Width="14" Height="14" Foreground="#A0A0A0" Margin="0,0,5,0"/>
+                                                        <TextBlock Text="Temizle" Foreground="#A0A0A0" FontSize="12"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                </Grid>
+
+                                <!-- URL Kutusu -->
+                                <Grid x:Name="PanelUrlInput" Visibility="Collapsed">
+                                    <Border Background="#1A1A1A" CornerRadius="8" BorderBrush="#444" BorderThickness="1" Padding="15">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <iconPacks:PackIconMaterial Kind="LinkVariant" Foreground="#666" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                            <TextBox x:Name="InputUrlScanner" Grid.Column="1" Background="Transparent" Foreground="White" CaretBrush="White" BorderThickness="0" FontSize="13" VerticalContentAlignment="Center"/>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+
+                                <!-- Dosya Kutusu -->
+                                <Grid x:Name="PanelFileInput" Visibility="Collapsed">
+                                    <Border Background="#1A1A1A" CornerRadius="8" BorderBrush="#444" BorderThickness="1" Padding="20" AllowDrop="True" Drop="FileInput_Drop">
+                                        <StackPanel HorizontalAlignment="Center">
+                                            <iconPacks:PackIconMaterial Kind="FolderUploadOutline" Width="40" Height="40" Foreground="#666" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                                            <TextBlock x:Name="FileNameText" Text="Dosya sürükleyin veya seçin" Foreground="#666" FontSize="13" HorizontalAlignment="Center" Margin="0,0,0,15"/>
+                                            <Button Content="{DynamicResource BtnSelectFile}" Style="{StaticResource GhostButton}" Padding="15,8" Click="BrowseFile_Click"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- MODÜL 2: Sonuç Kokpiti -->
+                        <Border Grid.Row="1" Background="#252525" CornerRadius="10" Padding="20" BorderBrush="#3A3A3A" BorderThickness="1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Text="Analiz Sonuçları" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,15"/>
+
+                                <!-- Skor Kadranı -->
+                                <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Ellipse x:Name="GaugeBackground" Width="150" Height="150" Stroke="#333" StrokeThickness="10" Fill="Transparent"/>
+                                    <Ellipse x:Name="GaugeForeground" Width="150" Height="150" Stroke="#22C55E" StrokeThickness="10" Fill="Transparent" StrokeDashArray="3.14 3.14" StrokeDashOffset="0" RenderTransformOrigin="0.5,0.5">
+                                        <Ellipse.RenderTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+                                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <TextBlock x:Name="ScoreText" Text="0" Foreground="White" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                        <TextBlock x:Name="ScoreLabel" Text="Güvenli" Foreground="#22C55E" FontSize="14" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- Sistem Mesajı -->
+                                <Border Grid.Row="2" Background="#1A1A1A" CornerRadius="5" Padding="10" Margin="0,15,0,0">
+                                    <TextBlock x:Name="SystemMessage" Text="Analiz için bir metin girin ve 'Yapay Zeka ile Analiz Et' butonuna tıklayın." Foreground="#888" FontSize="12" TextWrapping="Wrap"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <!-- Analiz Butonu -->
+                        <Grid Grid.Row="2" Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="AnalyzeButton" Style="{StaticResource AnalyzeButton}" Click="StartAnalysis_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <iconPacks:PackIconMaterial x:Name="AnalyzeIcon" Kind="Brain" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="AnalyzeButtonText" Text="Yapay Zeka ile Analiz Et" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <StackPanel x:Name="LoadingPanel" Grid.Column="1" Orientation="Horizontal" Margin="15,0,0,0" Visibility="Collapsed" VerticalAlignment="Center">
+                                <ProgressBar x:Name="LoadingProgress" IsIndeterminate="True" Width="100" Height="20" Foreground="#3B82F6" Background="#333"/>
+                                <TextBlock x:Name="LoadingText" Text="Analiz ediliyor..." Foreground="#A0A0A0" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="12"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- URL Sonuç (VirusTotal) -->
+                        <Border Grid.Row="3" x:Name="UrlResultPanel" Background="#252525" CornerRadius="10" Padding="15" BorderBrush="#3A3A3A" BorderThickness="1" Margin="0,10,0,0" Visibility="Collapsed">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                    <iconPacks:PackIconMaterial Kind="Virus" Foreground="#22C55E" Width="20" Height="20" Margin="0,0,10,0"/>
+                                    <TextBlock Text="VirusTotal Sonucu" Foreground="White" FontSize="14" FontWeight="SemiBold"/>
+                                </StackPanel>
+                                <TextBlock x:Name="VtUrlResult" Text="" Foreground="#A0A0A0" FontSize="13" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <!-- Sağ Panel: Log ve Ayarlar -->
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- MODÜL 3: Veritabanı Görüntüleyici -->
+                        <Border Grid.Row="0" Background="#252525" CornerRadius="10" Padding="15" BorderBrush="#3A3A3A" BorderThickness="1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Margin="0,0,0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Geçmiş Loglar" Foreground="White" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                        <Button Click="ExportCsv_Click" Cursor="Hand" Background="Transparent" BorderThickness="0" Padding="5,3" ToolTip="CSV Olarak İndir">
+                                            <StackPanel Orientation="Horizontal">
+                                                <iconPacks:PackIconMaterial Kind="FileDelimited" Width="14" Height="14" Foreground="#4ADE80" Margin="0,0,4,0"/>
+                                                <TextBlock Text="CSV" Foreground="#4ADE80" FontSize="11"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Click="ExportPdf_Click" Cursor="Hand" Background="Transparent" BorderThickness="0" Padding="5,3" ToolTip="PDF Rapor Al">
+                                            <StackPanel Orientation="Horizontal">
+                                                <iconPacks:PackIconMaterial Kind="FilePdfBox" Width="14" Height="14" Foreground="#EF4444" Margin="0,0,4,0"/>
+                                                <TextBlock Text="PDF" Foreground="#EF4444" FontSize="11"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Click="ClearLogs_Click" Cursor="Hand" Background="Transparent" BorderThickness="0" Padding="5,3" Margin="6,0,0,0" ToolTip="Tüm logları sil">
+                                            <StackPanel Orientation="Horizontal">
+                                                <iconPacks:PackIconMaterial Kind="TrashCanOutline" Width="14" Height="14" Foreground="#F59E0B" Margin="0,0,4,0"/>
+                                                <TextBlock Text="Temizle" Foreground="#F59E0B" FontSize="11"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Content="{DynamicResource BtnRefresh}" Style="{StaticResource GhostButton}" Padding="10,5" Margin="10,0,0,0" FontSize="11" Click="RefreshLogs_Click"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <TabControl Grid.Row="1" Background="Transparent" BorderThickness="0">
+                                    <TabItem Header="Son 10 Log" Foreground="#A0A0A0">
+                                        <Border Background="#0F1115" CornerRadius="6" Margin="0,8,0,0">
+                                            <DataGrid x:Name="LogsDataGrid" Style="{StaticResource DarkDataGrid}">
+                                                <DataGrid.Columns>
+                                                    <DataGridTextColumn Header="Tarih" Binding="{Binding Date}" Width="*"/>
+                                                    <DataGridTextColumn Header="Tür" Binding="{Binding Type}" Width="55"/>
+                                                    <DataGridTextColumn Header="Skor" Binding="{Binding Score}" Width="50"/>
+                                                    <DataGridTextColumn Header="Sonuç" Binding="{Binding Result}" Width="90"/>
+                                                    <DataGridTextColumn Header="Tehdit Tipi" Binding="{Binding ThreatType}" Width="90"/>
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </Border>
+                                    </TabItem>
+                                    <TabItem Header="Karantina (Şüpheli + Kritik)" Foreground="#EF4444">
+                                        <Border Background="#0F1115" CornerRadius="6" Margin="0,8,0,0">
+                                            <DataGrid x:Name="QuarantineDataGrid" Style="{StaticResource DarkDataGrid}">
+                                                <DataGrid.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem Header="Güvenli Olarak İşaretle (False Positive)" Click="MarkAsSafe_Click">
+                                                            <MenuItem.Icon>
+                                                                <iconPacks:PackIconMaterial Kind="ShieldCheck" Foreground="#22C55E"/>
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <MenuItem Header="Çöp Kutusuna Taşı" Click="MoveToTrash_Click">
+                                                            <MenuItem.Icon>
+                                                                <iconPacks:PackIconMaterial Kind="DeleteOutline" Foreground="#F59E0B"/>
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <Separator/>
+                                                        <MenuItem Header="Tamamen Sil" Click="DeletePermanently_Click">
+                                                            <MenuItem.Icon>
+                                                                <iconPacks:PackIconMaterial Kind="CloseCircleOutline" Foreground="#EF4444"/>
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                    </ContextMenu>
+                                                </DataGrid.ContextMenu>
+                                                <DataGrid.Columns>
+                                                    <DataGridTextColumn Header="Tarih" Binding="{Binding Date}" Width="*"/>
+                                                    <DataGridTextColumn Header="İçerik" Binding="{Binding Content}" Width="130"/>
+                                                    <DataGridTextColumn Header="Skor" Binding="{Binding Score}" Width="50"/>
+                                                    <DataGridTextColumn Header="Tehdit Tipi" Binding="{Binding ThreatType}" Width="90"/>
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </Border>
+                                    </TabItem>
+                                </TabControl>
+                            </Grid>
+                        </Border>
+
+                        <!-- MODÜL 4: Bağlantı Ayarları — Gizli (Ngrok durumu artık alt status bar'da gösteriliyor,
+                             ngrok URL Ayarlar overlay'inde yönetilir, API key Ayarlar'da). UI sade kalsın.
+                             Kontrol referansları (PingStatus, ApiUrlBox vb.) hâlâ kod tarafından erişilebilir. -->
+                        <Border Grid.Row="1" Visibility="Collapsed" Background="#252525" CornerRadius="10" Padding="15" BorderBrush="#3A3A3A" BorderThickness="1" Margin="0,10,0,0">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                    <iconPacks:PackIconMaterial Kind="Cog" Foreground="#3B82F6" Width="18" Height="18" Margin="0,0,8,0"/>
+                                    <TextBlock Text="Bağlantı ve Ağ Ayarları" Foreground="White" FontSize="14" FontWeight="SemiBold"/>
+                                </StackPanel>
+
+                                <Border Background="#1A1C1F" CornerRadius="6" Padding="10,8" Margin="0,5,0,10">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <iconPacks:PackIconMaterial Grid.Column="0" Kind="Lan" Width="14" Height="14" Foreground="#A0A0A0" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                        <TextBlock Grid.Column="1" Text="Ngrok:" Foreground="#A0A0A0" FontSize="12" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                        <TextBlock Grid.Column="2" x:Name="PingStatus" Text="Kontrol ediliyor..." Foreground="#F59E0B" FontSize="12" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                        <Ellipse Grid.Column="3" x:Name="PingIndicator" Width="10" Height="10" Fill="#F59E0B" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+
+                                <TextBlock Text="API URL:" Foreground="#888" FontSize="11" Margin="0,5,0,3"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox x:Name="ApiUrlBox" Text="http://localhost:5000" Style="{StaticResource InputTextBox}" FontSize="12"/>
+                                    <Button Grid.Column="1" Content="{DynamicResource BtnTestConnection}" Style="{StaticResource GhostButton}" Padding="10,5" Margin="5,0,0,0" FontSize="11" Click="TestConnection_Click">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="#3B82F6" CornerRadius="5" Padding="10,5">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <iconPacks:PackIconMaterial Kind="LanConnect" Width="12" Height="12" Foreground="White" Margin="0,0,5,0"/>
+                                                        <TextBlock Text="{DynamicResource BtnTestConnection}" Foreground="White" FontSize="11"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                    <Button Grid.Column="2" Content="{DynamicResource BtnSaveApiUrl}" Style="{StaticResource GhostButton}" Padding="10,5" Margin="5,0,0,0" FontSize="11" Click="SaveApiUrl_Click"/>
+                                </Grid>
+
+                                <TextBlock Text="API Key:" Foreground="#888" FontSize="11" Margin="0,10,0,3"/>
+                                <TextBox x:Name="ApiKeyBox" Style="{StaticResource InputTextBox}" FontSize="12"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <!-- Status Bar -->
+            <Grid Grid.Row="3" Margin="20,0,20,15">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="6*"/>
-                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <Border Grid.Column="0" Background="#661E1E1E" CornerRadius="10" Padding="20" BorderBrush="#33FFFFFF" BorderThickness="1">
+                <TextBlock x:Name="StatusText" Text="Hazır" Foreground="#A0A0A0" FontSize="12" VerticalAlignment="Center"/>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <TextBlock x:Name="ApiStatusText" Text="VT API: Kontrol..." Foreground="#A0A0A0" FontSize="12" VerticalAlignment="Center" Margin="0,0,15,0"/>
+                    <TextBlock x:Name="AiStatusText" Text="AI: Kontrol..." Foreground="#A0A0A0" FontSize="12" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Settings Overlay -->
+            <Grid x:Name="SettingsOverlay" Visibility="Collapsed" Background="#D9000000" Grid.RowSpan="4" Panel.ZIndex="100">
+                <Border Background="#1A1C1E" CornerRadius="12" BorderBrush="#444" BorderThickness="1"
+                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Width="480" MaxHeight="640" Margin="0,40">
+                    <DockPanel LastChildFill="True">
+                        <!-- Sabit başlık (scroll dışında kalır) -->
+                        <Border DockPanel.Dock="Top" Background="#1A1C1E" CornerRadius="12,12,0,0" Padding="30,25,30,15">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconMaterial Kind="Cog" Foreground="White" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                <TextBlock Text="Uygulama Ayarları" Foreground="White" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Sabit aksiyon butonları (scroll dışında, en altta kalır) -->
+                        <Border DockPanel.Dock="Bottom" Background="#1A1C1E" CornerRadius="0,0,12,12" Padding="30,15,30,25" BorderBrush="#2A2D31" BorderThickness="0,1,0,0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Content="{DynamicResource BtnCancel}" Style="{StaticResource GhostButton}" Padding="15,8" Margin="0,0,10,0" Click="CloseSettings_Click"/>
+                                <Button Content="{DynamicResource BtnSave}" Style="{StaticResource GlowScanButton}" Padding="36,10" MinWidth="120" Click="SaveSettings_Click"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Scroll edilebilir içerik -->
+                        <ScrollViewer Style="{StaticResource DarkScrollViewer}" Padding="30,5,25,15">
+                          <StackPanel>
+                        <TextBlock Text="VirusTotal API Anahtarı:" Foreground="#A0A0A0" FontSize="14" Margin="0,0,0,8"/>
+                        <Border Background="#1E1E1E" CornerRadius="5" BorderThickness="1" BorderBrush="#555" Margin="0,0,0,8">
+                            <Grid Margin="10">
+                                <!-- Gizli: nokta nokta gösterilen PasswordBox -->
+                                <PasswordBox x:Name="ApiPasswordBox" PasswordChar="•" Background="#222222" Foreground="White" BorderBrush="#555" BorderThickness="0" Padding="10,8,70,8" HorizontalAlignment="Stretch" PasswordChanged="ApiPasswordBox_PasswordChanged"/>
+                                <!-- Görünür: açık metin TextBox (toggle ile değişir) -->
+                                <TextBox x:Name="ApiTextBox" Visibility="Collapsed" Background="#222222" Foreground="White" CaretBrush="White" BorderBrush="#555" BorderThickness="0" Padding="10,8,70,8" HorizontalAlignment="Stretch" TextChanged="ApiTextBox_TextChanged"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,4,0">
+                                    <Button x:Name="ClearApiButton" Click="ClearApiKey_Click" Width="30" Background="Transparent" BorderThickness="0" Cursor="Hand" ToolTip="Anahtarı temizle">
+                                        <iconPacks:PackIconMaterial Kind="CloseCircleOutline" Foreground="#EF4444" Width="14" Height="14"/>
+                                    </Button>
+                                    <Button x:Name="ToggleApiVisibilityButton" Click="ToggleApiVisibility_Click" Width="30" Background="Transparent" BorderThickness="0" Cursor="Hand" ToolTip="Göster/Gizle">
+                                        <iconPacks:PackIconMaterial x:Name="ToggleEyeIcon" Kind="EyeOutline" Foreground="#A0A0A0"/>
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Separator Background="#333" Margin="0,10"/>
+
+                        <TextBlock Text="Gmail Hesabı:" Foreground="#A0A0A0" FontSize="14" Margin="0,10,0,8"/>
+                        <Border Background="#1E1E1E" CornerRadius="5" BorderThickness="1" BorderBrush="#555" Margin="0,0,0,10">
+                            <StackPanel Margin="10">
+                                <TextBlock Text="Email:" Foreground="#666" FontSize="12" Margin="0,0,0,5"/>
+                                <TextBox x:Name="GmailEmailBox" Background="#222222" Foreground="White" CaretBrush="White" BorderBrush="#555" BorderThickness="0" Padding="10,8" Margin="0,0,0,10"/>
+                                <TextBlock Text="App Password:" Foreground="#666" FontSize="12" Margin="0,0,0,5"/>
+                                <Grid>
+                                    <PasswordBox x:Name="GmailPasswordBox" PasswordChar="•" Background="#222222" Foreground="White" BorderBrush="#555" BorderThickness="0" Padding="10,8,70,8" HorizontalAlignment="Stretch"/>
+                                    <TextBox x:Name="GmailPasswordTextBox" Visibility="Collapsed" Background="#222222" Foreground="White" CaretBrush="White" BorderBrush="#555" BorderThickness="0" Padding="10,8,70,8" HorizontalAlignment="Stretch"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,4,0">
+                                        <Button Click="ClearGmailFields_Click" Width="30" Background="Transparent" BorderThickness="0" Cursor="Hand" ToolTip="Email ve şifreyi formdan temizle">
+                                            <iconPacks:PackIconMaterial Kind="CloseCircleOutline" Foreground="#EF4444" Width="14" Height="14"/>
+                                        </Button>
+                                        <Button Click="ToggleGmailPasswordVisibility_Click" Width="30" Background="Transparent" BorderThickness="0" Cursor="Hand" ToolTip="Göster/Gizle">
+                                            <iconPacks:PackIconMaterial x:Name="ToggleGmailEyeIcon" Kind="EyeOutline" Foreground="#A0A0A0"/>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <TextBlock Text="* Gmail için Google Hesabınızdan App Password oluşturmanız gerekir." Foreground="#666" FontSize="11" Margin="0,0,0,8" TextWrapping="Wrap"/>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                            <Button x:Name="LogoutGmailButton" Content="Gmail'den Çıkış Yap" Foreground="#F59E0B" Background="Transparent" BorderBrush="#F59E0B" BorderThickness="1" Padding="10,5" Margin="0,0,8,0" Cursor="Hand" FontSize="11" Click="LogoutGmail_Click"/>
+                            <Button x:Name="ResetGmailButton" Content="Hesabı Sıfırla" Foreground="#EF4444" Background="Transparent" BorderBrush="#EF4444" BorderThickness="1" Padding="10,5" Cursor="Hand" FontSize="11" Click="ResetGmail_Click"/>
+                        </StackPanel>
+
+                        <Border Background="#1A1C1F" CornerRadius="8" BorderBrush="#2A2D31" BorderThickness="1" Padding="14" Margin="0,5,0,15">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                    <iconPacks:PackIconMaterial Kind="ClockOutline" Width="16" Height="16" Foreground="#3B82F6" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Otomatik Senkron Aralığı" Foreground="White" FontSize="13" FontWeight="SemiBold" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <TextBlock Text="Gelen kutusunun otomatik olarak ne sıklıkla kontrol edileceğini seçin." Foreground="#888" FontSize="11" Margin="0,0,0,10" TextWrapping="Wrap"/>
+
+                                <ComboBox x:Name="SyncIntervalCombo" Style="{StaticResource DarkComboBox}" MaxDropDownHeight="220" SelectionChanged="SyncIntervalCombo_SelectionChanged">
+                                    <ComboBoxItem Tag="1">⚡ 1 dakika (test modu)</ComboBoxItem>
+                                    <ComboBoxItem Tag="5">🔄 5 dakika (varsayılan)</ComboBoxItem>
+                                    <ComboBoxItem Tag="15">⏱ 15 dakika</ComboBoxItem>
+                                    <ComboBoxItem Tag="30">🕐 30 dakika</ComboBoxItem>
+                                    <ComboBoxItem Tag="0">⛔ Devre dışı</ComboBoxItem>
+                                </ComboBox>
+                            </StackPanel>
+                        </Border>
+
+                        <Separator Background="#333" Margin="0,10"/>
+
+                        <TextBlock Text="Ngrok URL:" Foreground="#A0A0A0" FontSize="14" Margin="0,10,0,8"/>
+                        <Border Background="#1E1E1E" CornerRadius="5" BorderThickness="1" BorderBrush="#555" Margin="0,0,0,10">
+                            <StackPanel Margin="10">
+                                <TextBlock Text="Ngrok Tunnel URL:" Foreground="#666" FontSize="12" Margin="0,0,0,5"/>
+                                <TextBox x:Name="NgrokUrlBox" Background="#222222" Foreground="White" CaretBrush="White" BorderBrush="#555" BorderThickness="0" Padding="10,8" Text="http://localhost:5000"/>
+                                <TextBlock Text="* Local API'yi internet erişimine açmak için ngrok tunnel URL'sini girin" Foreground="#555" FontSize="10" Margin="0,5,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                          </StackPanel>
+                        </ScrollViewer>
+                    </DockPanel>
+                </Border>
+            </Grid>
+
+            <!-- Compose Mail Overlay -->
+            <Grid x:Name="ComposeMailOverlay" Visibility="Collapsed" Background="#D9000000" Grid.RowSpan="4" Panel.ZIndex="100">
+                <Border Background="#1A1C1E" CornerRadius="12" BorderBrush="#444" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="25" Width="600" MaxHeight="640">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -180,279 +1638,339 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,15">
-                            <Button x:Name="TabMetin" Style="{StaticResource TabButton}" Foreground="White" Background="#333" Click="TabMetin_Click">
-                                <StackPanel Orientation="Horizontal">
-                                    <iconPacks:PackIconMaterial Kind="FileDocumentOutline" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{DynamicResource TabText}" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-
-                            <Button x:Name="TabUrl" Style="{StaticResource TabButton}" Click="TabUrl_Click">
-                                <StackPanel Orientation="Horizontal">
-                                    <iconPacks:PackIconMaterial Kind="LinkVariant" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{DynamicResource TabUrl}" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-
-                            <Button x:Name="TabDosya" Style="{StaticResource TabButton}" Click="TabDosya_Click">
-                                <StackPanel Orientation="Horizontal">
-                                    <iconPacks:PackIconMaterial Kind="Paperclip" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{DynamicResource TabFile}" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                            <iconPacks:PackIconMaterial Kind="EmailEditOutline" Foreground="White" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <TextBlock Text="Yeni Mail" Foreground="White" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center"/>
                         </StackPanel>
 
-                        <Grid Grid.Row="1" Margin="0,0,0,15">
+                        <StackPanel Grid.Row="1">
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Kime:" Foreground="#666" VerticalAlignment="Center"/>
+                                <TextBox x:Name="ComposeToBox" Grid.Column="1" Background="#222222" Foreground="White" BorderBrush="#555" BorderThickness="1" Padding="10,8"/>
+                            </Grid>
 
-                            <Border x:Name="PanelText" Background="#40000000" CornerRadius="8" BorderBrush="#333" BorderThickness="1" Visibility="Visible">
-                                <Grid>
-                                    <TextBlock x:Name="TextExampleHint" 
-                                               Text="{DynamicResource TextExampleHint}" 
-                                               Foreground="#666666" 
-                                               FontSize="14" 
-                                               Padding="15" 
-                                               TextWrapping="Wrap" 
-                                               IsHitTestVisible="False">
-                                        <TextBlock.Style>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Text, ElementName=InputText}" Value="">
-                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Konu:" Foreground="#666" VerticalAlignment="Center"/>
+                                <TextBox x:Name="ComposeSubjectBox" Grid.Column="1" Background="#222222" Foreground="White" BorderBrush="#555" BorderThickness="1" Padding="10,8"/>
+                            </Grid>
 
-                                    <TextBox x:Name="InputText" 
-                                             CaretBrush="White" 
-                                             Background="Transparent" 
-                                             Foreground="#D0D0D0" 
-                                             BorderThickness="0" 
-                                             TextWrapping="Wrap" 
-                                             AcceptsReturn="True" 
-                                             Padding="15" 
-                                             FontSize="14"/>
-                                </Grid>
-                            </Border>
+                            <TextBlock Text="İçerik:" Foreground="#666" Margin="0,0,0,5"/>
+                            <TextBox x:Name="ComposeBodyBox" Background="#222222" Foreground="White" CaretBrush="White" BorderBrush="#555" BorderThickness="1" Padding="10" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Height="160"/>
 
-                            <Border x:Name="PanelUrl" Background="#40000000" CornerRadius="8" BorderBrush="#333" BorderThickness="1" Visibility="Collapsed" Padding="20">
-                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <iconPacks:PackIconMaterial Kind="Earth" Width="45" Height="45" Foreground="#A0A0A0" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-                                    <TextBlock x:Name="TextUrlHint" Text="{DynamicResource TextUrlHint}" Foreground="#A0A0A0" FontSize="14" Margin="0,0,0,20" HorizontalAlignment="Center"/>
-
-                                    <Border Background="#151718" CornerRadius="8" BorderThickness="1" BorderBrush="#555" Width="380" Height="42">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-
-                                            <iconPacks:PackIconMaterial Grid.Column="0" Kind="Link" Foreground="#888" VerticalAlignment="Center" Margin="12,0,5,0"/>
-
-                                            <Grid Grid.Column="1">
-                                                <TextBlock x:Name="LinkText" Text="{DynamicResource LinkText}" Foreground="#666666" FontSize="14" VerticalAlignment="Center" Padding="5,0,15,0" IsHitTestVisible="False">
-                                                    <TextBlock.Style>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Text, ElementName=InputUrl}" Value="">
-                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </TextBlock.Style>
-                                                </TextBlock>
-
-                                                <TextBox x:Name="InputUrl" CaretBrush="White" Background="Transparent" Foreground="White" BorderThickness="0" Padding="5,0,15,0" FontSize="14" VerticalContentAlignment="Center" Text=""/>
-                                            </Grid>
-                                        </Grid>
-                                    </Border>
+                            <!-- Ekler bölümü -->
+                            <Grid Margin="0,12,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                                    <iconPacks:PackIconMaterial Kind="Paperclip" Width="14" Height="14" Foreground="#A0A0A0" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="AttachmentCountText" Text="Ek yok" Foreground="#A0A0A0" FontSize="11" VerticalAlignment="Center"/>
                                 </StackPanel>
+                                <Button Grid.Column="1" Cursor="Hand" Padding="10,5" Click="BrowseAttachment_Click" Foreground="White" Background="#3B82F6" BorderThickness="0">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}" CornerRadius="5" Padding="{TemplateBinding Padding}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <iconPacks:PackIconMaterial Kind="Plus" Width="12" Height="12" Margin="0,0,5,0" VerticalAlignment="Center" Foreground="White"/>
+                                                    <TextBlock Text="Dosya Ekle" Foreground="White" FontSize="11" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </Grid>
+
+                            <Border x:Name="AttachmentsListBorder" Background="#1A1C1F" CornerRadius="5" Padding="8" Margin="0,8,0,0" Visibility="Collapsed" MaxHeight="80">
+                                <ScrollViewer Style="{StaticResource DarkScrollViewer}">
+                                    <ItemsControl x:Name="AttachmentsList">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="0,2">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <iconPacks:PackIconMaterial Grid.Column="0" Kind="FileOutline" Width="14" Height="14" Foreground="#60A5FA" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                                    <TextBlock Grid.Column="1" Text="{Binding FileName}" Foreground="#D0D0D0" FontSize="11" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding SizeDisplay}" Foreground="#666" FontSize="10" VerticalAlignment="Center" Margin="6,0"/>
+                                                    <Button Grid.Column="3" Cursor="Hand" Background="Transparent" BorderThickness="0" Padding="4" Tag="{Binding FullPath}" Click="RemoveAttachment_Click" ToolTip="Eki kaldır">
+                                                        <iconPacks:PackIconMaterial Kind="CloseCircleOutline" Width="14" Height="14" Foreground="#EF4444"/>
+                                                    </Button>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
                             </Border>
+                        </StackPanel>
 
-                            <Border x:Name="PanelDosya" Background="#40000000" CornerRadius="8" BorderBrush="#333" BorderThickness="1" Visibility="Collapsed" Padding="20" AllowDrop="True" Drop="PanelDosya_Drop">
-                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <iconPacks:PackIconMaterial Kind="FolderUploadOutline" Width="45" Height="45" Foreground="#A0A0A0" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-                                    <TextBlock x:Name="SelectedFileNameText" Text="{DynamicResource SelectedFileNameText}" Foreground="#A0A0A0" FontSize="14" Margin="0,0,0,20" HorizontalAlignment="Center"/>
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
+                            <Button Content="{DynamicResource BtnCancel}" Style="{StaticResource GhostButton}" Padding="15,8" Margin="0,0,10,0" Click="CloseComposeMail_Click"/>
+                            <Button Style="{StaticResource GhostButton}" Padding="12,8" Margin="0,0,10,0" Cursor="Hand" Foreground="#A0A0A0" Click="SaveDraft_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <iconPacks:PackIconMaterial Kind="ContentSaveOutline" Width="14" Height="14" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Taslak Olarak Kaydet" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Content="{DynamicResource BtnSend}" Style="{StaticResource GlowScanButton}" Padding="20,10" Click="SendMail_Click"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
 
-                                    <Button x:Name="FolderUploadButton" Content="{DynamicResource FolderUploadButton}" Width="160" Height="35" Foreground="White" Cursor="Hand" Click="BrowseFile_Click">
+            <!-- Şüpheli Göndericiler Overlay -->
+            <Grid x:Name="SuspiciousSendersOverlay" Visibility="Collapsed" Background="#D9000000" Grid.RowSpan="4" Panel.ZIndex="100">
+                <Border Background="#1A1C1E" CornerRadius="12" BorderBrush="#444" BorderThickness="1"
+                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Width="560" MaxHeight="600" Margin="0,40">
+                    <DockPanel LastChildFill="True">
+                        <!-- Başlık -->
+                        <Border DockPanel.Dock="Top" Background="#1A1C1E" CornerRadius="12,12,0,0" Padding="25,20,25,12">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                    <iconPacks:PackIconMaterial Kind="ShieldAccountOutline" Foreground="#EF4444" Width="22" Height="22" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Şüpheli Hesaplar" Foreground="White" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <TextBlock Text="Bu listedeki adreslerden gelen tüm yeni mailler otomatik olarak Çöp Kutusu'na taşınır." Foreground="#888" FontSize="11" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Alt sabit: yeni ekleme + kapat -->
+                        <Border DockPanel.Dock="Bottom" Background="#1A1C1E" CornerRadius="0,0,12,12" Padding="25,15,25,20" BorderBrush="#2A2D31" BorderThickness="0,1,0,0">
+                            <StackPanel>
+                                <TextBlock Text="Manuel olarak ekle:" Foreground="#A0A0A0" FontSize="12" Margin="0,0,0,6"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox x:Name="NewSuspiciousEmailBox" Grid.Column="0" Background="#222" Foreground="White" CaretBrush="White" BorderBrush="#444" BorderThickness="1" Padding="10,8" FontSize="12"/>
+                                    <Button Grid.Column="1" Margin="8,0,0,0" Padding="14,8" Cursor="Hand" Click="AddSuspiciousSender_Click" Foreground="White" Background="#EF4444" BorderThickness="0">
                                         <Button.Template>
                                             <ControlTemplate TargetType="Button">
-                                                <Border Background="#333" CornerRadius="5" BorderBrush="#555" BorderThickness="1">
-                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <Border Background="{TemplateBinding Background}" CornerRadius="5" Padding="{TemplateBinding Padding}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <iconPacks:PackIconMaterial Kind="Plus" Width="12" Height="12" Margin="0,0,5,0" VerticalAlignment="Center" Foreground="White"/>
+                                                        <TextBlock Text="Ekle" Foreground="White" VerticalAlignment="Center"/>
+                                                    </StackPanel>
                                                 </Border>
                                             </ControlTemplate>
                                         </Button.Template>
                                     </Button>
-
-                                    <CheckBox x:Name="AutoScanCheckBox" 
-                                              Content="{DynamicResource RealTimeReader}" 
-                                              Foreground="#A0A0A0" 
-                                              HorizontalAlignment="Center" 
-                                              Margin="0,20,0,0" 
-                                              Cursor="Hand" 
-                                              Click="AutoScan_Click"/>
-                                </StackPanel>
-                            </Border>
-                        </Grid>
-
-                        <Button Grid.Row="2" Style="{StaticResource GlowScanButton}" Click="Scan_button_Click">
-                            <StackPanel Orientation="Horizontal">
-                                <iconPacks:PackIconMaterial Kind="Radar" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                <TextBlock Text="{DynamicResource StartScanText}" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-                    </Grid>
-                </Border>
-
-                <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <TextBlock x:Name="ThreatRadar" Text="{DynamicResource ThreatRadar}" Foreground="#A0A0A0" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,20"/>
-
-                    <Grid Width="120" Height="120" Margin="0,0,0,20">
-                        <iconPacks:PackIconMaterial x:Name="ShieldIcon" Kind="ShieldCheckOutline" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#22C55E">
-                            <iconPacks:PackIconMaterial.Effect>
-                                <DropShadowEffect x:Name="ShieldGlow" BlurRadius="40" Color="#22C55E" Opacity="0.8" ShadowDepth="0"/>
-                            </iconPacks:PackIconMaterial.Effect>
-                        </iconPacks:PackIconMaterial>
-                    </Grid>
-
-                    <TextBlock x:Name="StatusText" Text="{DynamicResource StatusText}" Foreground="#4ADE80" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="360" Margin="0,0,0,10"/>
-
-                    <ScrollViewer MaxHeight="80" VerticalScrollBarVisibility="Auto" Margin="0,15,0,15">
-                        <TextBlock x:Name="ScanDescriptionText" 
-                                   Text="{DynamicResource ScanDescriptionText}" 
-                                   TextWrapping="Wrap" 
-                                   TextAlignment="Center" 
-                                   Foreground="#A0A0A0" 
-                                   FontSize="13" />
-                    </ScrollViewer>
-
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button x:Name="PdfReportButton" Width="125" BorderThickness="1" BorderBrush="#3B82F6" Background="#403B82F6" Foreground="White" Padding="8" Margin="0,0,10,0" Cursor="Hand" Visibility="Collapsed" Click="PdfReport_Click">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Background="{TemplateBinding Background}" CornerRadius="5" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                            <iconPacks:PackIconMaterial Kind="FilePdfBox" Margin="0,0,5,0" VerticalAlignment="Center" Foreground="#FF93C5FD"/>
-                                            <TextBlock Text="{DynamicResource DownloadPDF}" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="12"/>
-                                        </StackPanel>
-                                    </Border>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-
-                        <Button x:Name="DeleteThreatButton" Width="125" BorderThickness="1" BorderBrush="#EF4444" Background="#40EF4444" Foreground="White" Padding="8" Margin="0,0,10,0" Cursor="Hand" Visibility="Collapsed" Click="DeleteThreat_Click">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Background="{TemplateBinding Background}" CornerRadius="5" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                            <iconPacks:PackIconMaterial Kind="DeleteForever" Margin="0,0,5,0" VerticalAlignment="Center" Foreground="#FCA5A5"/>
-                                            <TextBlock Text="{DynamicResource DeleteThreat}" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="12"/>
-                                        </StackPanel>
-                                    </Border>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-
-                        <Button x:Name="ResetButton" Width="125" BorderThickness="1" BorderBrush="#555555" Background="#333333" Foreground="White" Padding="8" Cursor="Hand" Visibility="Hidden" Click="Reset_button_Click">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Background="{TemplateBinding Background}" CornerRadius="5" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                            <iconPacks:PackIconMaterial Kind="Refresh" Margin="0,0,5,0" VerticalAlignment="Center" Foreground="#A0A0A0"/>
-                                            <TextBlock Text="{DynamicResource NewScan}" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="12"/>
-                                        </StackPanel>
-                                    </Border>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                    </StackPanel>
-                </StackPanel>
-            </Grid>
-
-            <ProgressBar x:Name="ScanProgressBar" Grid.Row="2" Style="{StaticResource ModernProgressBar}" Height="6" Margin="20,0,20,10" Maximum="100" Visibility="Collapsed"/>
-
-            <Grid Grid.Row="3" Margin="20,0,20,20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-
-                <Border Grid.Column="0" Style="{StaticResource StatusCard}" Margin="0,0,10,0">
-                    <StackPanel VerticalAlignment="Center">
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                            <iconPacks:PackIconMaterial x:Name="AiStatusIcon" Kind="RobotOutline" Foreground="White" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                            <TextBlock Text="{DynamicResource AiEngineTitle}" Foreground="White" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <TextBlock x:Name="AiStatusText" Text="Aktif - Doğruluk Oranı: %98.1" Foreground="#A0A0A0" FontSize="12"/>
-                    </StackPanel>
-                </Border>
-
-                <Border Grid.Column="1" Style="{StaticResource StatusCard}" Margin="10,0,0,0">
-                    <StackPanel VerticalAlignment="Center">
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                            <iconPacks:PackIconMaterial x:Name="ApiStatusIcon" Kind="CloudSearchOutline" Foreground="#22C55E" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                            <TextBlock Text="{DynamicResource VtShieldTitle}" Foreground="White" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <TextBlock x:Name="ApiStatusText" Text="API Bağlantısı: Devrede" Foreground="#A0A0A0" FontSize="12"/>
-                    </StackPanel>
-                </Border>
-            </Grid>
-
-            <Grid x:Name="SettingsOverlay" Visibility="Collapsed" Background="#D9000000" Grid.RowSpan="4" Panel.ZIndex="100">
-                <Border Background="#1A1C1E" CornerRadius="12" BorderBrush="#444" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="30" Width="450">
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,25">
-                            <iconPacks:PackIconMaterial Kind="Cog" Foreground="White" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                            <TextBlock Text="Uygulama Ayarları" Foreground="White" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                        </StackPanel>
-
-                        <TextBlock Text="VirusTotal API Anahtarı:" Foreground="#A0A0A0" FontSize="14" Margin="0,0,0,8"/>
-                        <Border Background="#121212" CornerRadius="5" BorderThickness="1" BorderBrush="#555" Margin="0,0,0,15">
-                            <StackPanel Margin="10,10,10,10">
-                                <TextBlock Text="VirusTotal API Anahtarı:" Foreground="#A0A0A0" Margin="0,0,0,5" FontSize="13"/>
-                                <Grid Margin="0,0,0,10">
-                                    <PasswordBox x:Name="ApiPasswordBox" 
-                                                 PasswordChar="•" 
-                                                 Background="#222222" 
-                                                 Foreground="White" 
-                                                 BorderBrush="#555" 
-                                                 BorderThickness="1" 
-                                                 Padding="10,8,35,8" 
-                                                 HorizontalAlignment="Stretch"
-                                                 PasswordChanged="ApiPasswordBox_PasswordChanged"/>
-
-                                    <TextBox x:Name="ApiTextBox" 
-                                             Visibility="Collapsed" 
-                                             Background="#222222" 
-                                             Foreground="White" 
-                                             BorderBrush="#555" 
-                                             BorderThickness="1" 
-                                             Padding="10,8,35,8" 
-                                             HorizontalAlignment="Stretch"
-                                             TextChanged="ApiTextBox_TextChanged"/>
-
-                                    <Button x:Name="ToggleApiVisibilityButton" 
-                                            Click="ToggleApiVisibility_Click" 
-                                            HorizontalAlignment="Right" 
-                                            Width="30" 
-                                            Background="Transparent" 
-                                            BorderThickness="0" 
-                                            Cursor="Hand">
-                                        <iconPacks:PackIconMaterial x:Name="ToggleEyeIcon" Kind="EyeOutline" Foreground="#A0A0A0" VerticalAlignment="Center"/>
-                                    </Button>
                                 </Grid>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+                                    <Button Content="Kapat" Style="{StaticResource GhostButton}" Padding="15,8" Click="CloseSuspiciousSenders_Click"/>
+                                </StackPanel>
                             </StackPanel>
                         </Border>
 
-                        <TextBlock Text="* Anahtarınız bilgisayarınızda yerel bir dosyada güvenle saklanır." Foreground="#666" FontSize="12" Margin="0,0,0,25" TextWrapping="Wrap"/>
+                        <!-- Scroll edilebilir liste -->
+                        <ScrollViewer Style="{StaticResource DarkScrollViewer}" Padding="25,5,15,5">
+                            <ItemsControl x:Name="SuspiciousSendersList">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="#1F2226" CornerRadius="6" Padding="12,10" Margin="0,4">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <iconPacks:PackIconMaterial Grid.Column="0" Kind="AccountAlertOutline" Width="18" Height="18" Foreground="#EF4444" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding Email}" Foreground="White" FontSize="13" FontWeight="SemiBold"/>
+                                                    <TextBlock Text="{Binding DateAdded, StringFormat='Eklenme: {0}'}" Foreground="#666" FontSize="10" Margin="0,2,0,0"/>
+                                                </StackPanel>
+                                                <Button Grid.Column="2" Cursor="Hand" Background="Transparent" BorderThickness="0" Padding="6" Tag="{Binding Email}" Click="RemoveSuspiciousSender_Click" ToolTip="Listeden çıkar">
+                                                    <iconPacks:PackIconMaterial Kind="CloseCircleOutline" Width="18" Height="18" Foreground="#A0A0A0"/>
+                                                </Button>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </DockPanel>
+                </Border>
+            </Grid>
+
+            <!-- Mail Silme Onay Overlay'i — Trash veya Permanent seçimi -->
+            <!-- KVKK / Disclaimer onay ekranı — ilk açılışta gösterilir, kullanıcı kabul edene kadar app etkileşimsiz.
+                 Onay DB'de "kvkk_accepted_v1" anahtarıyla saklanır, sonraki açılışlarda atlanır. -->
+            <Grid x:Name="KvkkOverlay" Visibility="Collapsed" Background="#E6000000" Grid.RowSpan="4" Panel.ZIndex="200">
+                <Border Background="#1A1C1E" CornerRadius="12" BorderBrush="#3B82F6" BorderThickness="2"
+                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Width="640" MaxHeight="640" Margin="0,40">
+                    <DockPanel LastChildFill="True">
+                        <Border DockPanel.Dock="Top" Background="#1A1C1E" CornerRadius="12,12,0,0" Padding="30,25,30,18">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                                    <iconPacks:PackIconMaterial Kind="ShieldLockOutline" Foreground="#3B82F6" Width="26" Height="26" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                    <TextBlock Text="Gizlilik ve Veri Kullanımı" Foreground="White" FontSize="22" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <TextBlock Text="Siber Mail &amp; Güvenlik Asistanı'na hoş geldiniz." Foreground="#A0A0A0" FontSize="13" Margin="0,4,0,0"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border DockPanel.Dock="Bottom" Background="#1A1C1E" CornerRadius="0,0,12,12" Padding="30,18,30,24" BorderBrush="#2A2D31" BorderThickness="0,1,0,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox x:Name="KvkkAgreeCheck" Grid.Column="0" Foreground="#D0D0D0" FontSize="12" VerticalAlignment="Center" Cursor="Hand">
+                                    <CheckBox.Content>
+                                        <TextBlock Text="Yukarıdaki gizlilik koşullarını okudum ve kabul ediyorum." TextWrapping="Wrap"/>
+                                    </CheckBox.Content>
+                                </CheckBox>
+                                <Button Grid.Column="1" Content="Reddet ve Çık" Style="{StaticResource GhostButton}" Padding="14,9" Margin="0,0,10,0" Foreground="#A0A0A0" Click="KvkkDecline_Click"/>
+                                <Button Grid.Column="2" x:Name="KvkkAcceptButton" Click="KvkkAccept_Click" IsEnabled="False" Padding="22,9" Foreground="White" Background="#3B82F6" BorderThickness="0" Cursor="Hand">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsEnabled" Value="False">
+                                                    <Setter TargetName="bd" Property="Background" Value="#33444444"/>
+                                                    <Setter Property="Foreground" Value="#666"/>
+                                                </Trigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="bd" Property="Background" Value="#2563EB"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                    <StackPanel Orientation="Horizontal">
+                                        <iconPacks:PackIconMaterial Kind="Check" Width="14" Height="14" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Kabul Et ve Devam Et" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </Border>
+
+                        <ScrollViewer Style="{StaticResource DarkScrollViewer}" Padding="30,5,20,15">
+                            <StackPanel>
+                                <Border Background="#0F1A2E" CornerRadius="8" Padding="14" Margin="0,0,0,12" BorderBrush="#1E3A8A" BorderThickness="1">
+                                    <StackPanel Orientation="Horizontal">
+                                        <iconPacks:PackIconMaterial Kind="LockOutline" Foreground="#60A5FA" Width="18" Height="18" VerticalAlignment="Top" Margin="0,2,10,0"/>
+                                        <TextBlock Foreground="#D0D0D0" FontSize="12" TextWrapping="Wrap">
+                                            <Run FontWeight="SemiBold" Foreground="White">Verileriniz cihazınızdan dışarı çıkmaz.</Run>
+                                            <LineBreak/>
+                                            Tüm mail içerikleri, analiz sonuçları ve hesap bilgileri yerel SQLite veritabanında, bilgisayarınızda saklanır.
+                                            Üçüncü taraf sunuculara aktarılmaz.
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <TextBlock Text="Nasıl Çalışır?" Foreground="White" FontSize="14" FontWeight="SemiBold" Margin="0,4,0,8"/>
+                                <StackPanel Margin="0,0,0,12">
+                                    <Grid Margin="0,0,0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <iconPacks:PackIconMaterial Grid.Column="0" Kind="Gmail" Width="16" Height="16" Foreground="#EA4335" VerticalAlignment="Top" Margin="0,2,8,0"/>
+                                        <TextBlock Grid.Column="1" Foreground="#A0A0A0" FontSize="12" TextWrapping="Wrap">
+                                            <Run FontWeight="SemiBold" Foreground="#D0D0D0">Gmail:</Run>
+                                            Mailleriniz Google'ın resmi IMAP/SMTP sunucuları üzerinden çekilir. App Password'unuz Windows DPAPI ile şifrelenerek diskinizde saklanır — yalnızca aynı kullanıcı hesabınız ile çözülebilir.
+                                        </TextBlock>
+                                    </Grid>
+                                    <Grid Margin="0,0,0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <iconPacks:PackIconMaterial Grid.Column="0" Kind="Virus" Width="16" Height="16" Foreground="#22C55E" VerticalAlignment="Top" Margin="0,2,8,0"/>
+                                        <TextBlock Grid.Column="1" Foreground="#A0A0A0" FontSize="12" TextWrapping="Wrap">
+                                            <Run FontWeight="SemiBold" Foreground="#D0D0D0">VirusTotal:</Run>
+                                            URL ve dosyalar tarandığında yalnızca SHA-256 özet (hash) veya URL adresi VirusTotal API'sine gönderilir.
+                                            Mail içeriği, kişisel bilgi paylaşılmaz. Bu, antivirüs sektörünün standart kullanımıdır.
+                                        </TextBlock>
+                                    </Grid>
+                                    <Grid Margin="0,0,0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <iconPacks:PackIconMaterial Grid.Column="0" Kind="Brain" Width="16" Height="16" Foreground="#A855F7" VerticalAlignment="Top" Margin="0,2,8,0"/>
+                                        <TextBlock Grid.Column="1" Foreground="#A0A0A0" FontSize="12" TextWrapping="Wrap">
+                                            <Run FontWeight="SemiBold" Foreground="#D0D0D0">Yapay Zekâ (ML):</Run>
+                                            Phishing ve spam tespiti bilgisayarınızda yerel olarak çalışan Flask/Python servisi (predict.exe) tarafından yapılır.
+                                            Hiçbir metin veya mail içeriği harici bir API'ye gönderilmez.
+                                        </TextBlock>
+                                    </Grid>
+                                </StackPanel>
+
+                                <TextBlock Text="Veri Saklama" Foreground="White" FontSize="14" FontWeight="SemiBold" Margin="0,4,0,6"/>
+                                <TextBlock Foreground="#A0A0A0" FontSize="12" TextWrapping="Wrap" Margin="0,0,0,10">
+                                    Uygulamayı kaldırdığınızda veya `siberkalkan.db` dosyasını sildiğinizde tüm veri kalıcı olarak yok olur.
+                                    Hesap parolanızı istediğiniz zaman Ayarlar → "Hesabı Sıfırla" ile silebilirsiniz.
+                                </TextBlock>
+
+                                <TextBlock Text="Sorumluluk Reddi" Foreground="White" FontSize="14" FontWeight="SemiBold" Margin="0,4,0,6"/>
+                                <TextBlock Foreground="#A0A0A0" FontSize="12" TextWrapping="Wrap" Margin="0,0,0,10">
+                                    Bu uygulama bir bitirme projesi/eğitim amaçlı yazılmıştır. Tehdit tespiti %100 güvenilir değildir,
+                                    profesyonel antivirüs çözümlerinin yerine geçmez. Şüpheli işlemler için her zaman kendi muhakemenizi kullanın.
+                                </TextBlock>
+
+                                <TextBlock Text="KVKK (Kişisel Verilerin Korunması Kanunu)" Foreground="White" FontSize="14" FontWeight="SemiBold" Margin="0,4,0,6"/>
+                                <TextBlock Foreground="#A0A0A0" FontSize="12" TextWrapping="Wrap" Margin="0,0,0,10">
+                                    Uygulama, KVKK kapsamında "veri sorumlusu" değildir; çünkü verileriniz yalnızca sizin cihazınızda kalır ve
+                                    hiçbir merkezi sunucuya aktarılmaz. Verilerinizin kontrolü tamamen sizdedir.
+                                </TextBlock>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </DockPanel>
+                </Border>
+            </Grid>
+
+            <Grid x:Name="DeleteConfirmOverlay" Visibility="Collapsed" Background="#D9000000" Grid.RowSpan="4" Panel.ZIndex="100">
+                <Border Background="#1A1C1E" CornerRadius="12" BorderBrush="#444" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="30" Width="480">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,18">
+                            <iconPacks:PackIconMaterial Kind="TrashCanOutline" Foreground="#F59E0B" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <TextBlock Text="Maili Sil" Foreground="White" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <TextBlock x:Name="DeleteConfirmMessage" Text="" Foreground="#D0D0D0" FontSize="13" Margin="0,0,0,18" TextWrapping="Wrap"/>
+
+                        <Border Background="#1F2226" CornerRadius="6" Padding="12" Margin="0,0,0,20">
+                            <StackPanel>
+                                <StackPanel x:Name="TrashHintRow" Orientation="Horizontal" Margin="0,0,0,6">
+                                    <iconPacks:PackIconMaterial Kind="TrashCanOutline" Width="14" Height="14" Foreground="#F59E0B" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                    <TextBlock Text="Çöp Kutusuna Taşı:" Foreground="#F59E0B" FontSize="11" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                    <TextBlock Text="Geri alabilirsiniz (Gmail tarafında da 30 gün saklanır)" Foreground="#A0A0A0" FontSize="11" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <iconPacks:PackIconMaterial Kind="DeleteForever" Width="14" Height="14" Foreground="#EF4444" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                    <TextBlock Text="Kalıcı Olarak Sil:" Foreground="#EF4444" FontSize="11" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                    <TextBlock Text="Veritabanından ve Gmail'den silinir, geri alınamaz" Foreground="#A0A0A0" FontSize="11" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Button Content="İptal" Style="{StaticResource GhostButton}" Padding="15,8" Margin="0,0,10,0" Click="CloseSettings_Click"/>
-                            <Button Content="Kaydet ve Kapat" Foreground="Black" Background="#22C55E" FontWeight="SemiBold" BorderThickness="0" Padding="20,10" Cursor="Hand" Click="SaveSettings_Click">
+                            <Button Content="İptal" Style="{StaticResource GhostButton}" Padding="15,8" Margin="0,0,10,0" Click="CancelDelete_Click"/>
+                            <Button x:Name="DeleteTrashButton" Foreground="#F59E0B" Background="Transparent" BorderBrush="#F59E0B" BorderThickness="1" Padding="12,8" Margin="0,0,10,0" Cursor="Hand" Click="ConfirmMoveToTrash_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <iconPacks:PackIconMaterial Kind="TrashCanOutline" Width="14" Height="14" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Çöp Kutusuna Taşı" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Foreground="White" Background="#EF4444" BorderThickness="0" Padding="12,8" Cursor="Hand" Click="ConfirmPermanentDelete_Click">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
                                         <Border Background="{TemplateBinding Background}" CornerRadius="5" Padding="{TemplateBinding Padding}">
@@ -460,12 +1978,248 @@
                                         </Border>
                                     </ControlTemplate>
                                 </Button.Template>
+                                <StackPanel Orientation="Horizontal">
+                                    <iconPacks:PackIconMaterial Kind="DeleteForever" Width="14" Height="14" Margin="0,0,6,0" VerticalAlignment="Center" Foreground="White"/>
+                                    <TextBlock Text="Kalıcı Olarak Sil" VerticalAlignment="Center" Foreground="White"/>
+                                </StackPanel>
                             </Button>
                         </StackPanel>
                     </StackPanel>
                 </Border>
             </Grid>
 
+            <!-- VirusTotal Vendor Raporu Modal -->
+            <Grid x:Name="VtReportOverlay" Visibility="Collapsed" Background="#D9000000" Grid.RowSpan="4" Panel.ZIndex="100">
+                <Border Background="#1A1C1E" CornerRadius="12" BorderBrush="#444" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="25" Width="500" MaxHeight="600">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                            <iconPacks:PackIconMaterial Kind="ShieldSearch" Foreground="#22C55E" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <TextBlock Text="VirusTotal Vendor Raporu" Foreground="White" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            <Button Content="✕" Foreground="#A0A0A0" Background="Transparent" BorderThickness="0" FontSize="18" Cursor="Hand" HorizontalAlignment="Right" Margin="200,0,0,0" Click="CloseVtReport_Click"/>
+                        </StackPanel>
+
+                        <Border Grid.Row="1" Background="#1A1A1A" CornerRadius="8" Padding="15" Margin="0,0,0,15">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="Tehdit Algılayan" Foreground="#888" FontSize="11"/>
+                                    <TextBlock x:Name="VtPositiveCount" Text="0" Foreground="#EF4444" FontSize="28" FontWeight="Bold"/>
+                                    <TextBlock Text="motor" Foreground="#666" FontSize="11"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="Güvenli" Foreground="#888" FontSize="11"/>
+                                    <TextBlock x:Name="VtNegativeCount" Text="0" Foreground="#22C55E" FontSize="28" FontWeight="Bold"/>
+                                    <TextBlock Text="motor" Foreground="#666" FontSize="11"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                            <StackPanel>
+                                <TextBlock Text="Vendor Sonuçları" Foreground="#A0A0A0" FontSize="12" Margin="0,0,0,10"/>
+                                <ItemsControl x:Name="VendorResultsList">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Background="#1A1A1A" CornerRadius="4" Padding="10,6" Margin="0,2">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{Binding Name}" Foreground="#D0D0D0" FontSize="12"/>
+                                                    <TextBlock Grid.Column="1" Text="{Binding Result}" FontSize="12" FontWeight="SemiBold"/>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </ScrollViewer>
+
+                        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
+                            <Button Content="{DynamicResource BtnClose}" Style="{StaticResource GhostButton}" Padding="15,8" Click="CloseVtReport_Click"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- Help Overlay -->
+            <Grid x:Name="HelpOverlay" Visibility="Collapsed" Background="#D9000000" Grid.RowSpan="4" Panel.ZIndex="100">
+                <Border Background="#1A1C1E" CornerRadius="12" BorderBrush="#444" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="30" Width="600" MaxHeight="700">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                                <iconPacks:PackIconMaterial Kind="HelpCircleOutline" Foreground="White" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                <TextBlock Text="Gmail App Password Nasıl Alınır?" Foreground="White" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <TextBlock TextWrapping="Wrap" Foreground="#D0D0D0" FontSize="13" LineHeight="26">
+                                <Run FontWeight="Bold" FontSize="14" Foreground="#4ADE80">Neden App Password Gerekli?</Run>
+                                <LineBreak/>
+                                <Run>Google, güvenlik nedeniyle uygulamalardan doğrudan şifre ile girişi engellemiştir.</Run>
+                                <LineBreak/><LineBreak/>
+                                <Run FontWeight="Bold" FontSize="14" Foreground="#3B82F6">Adım Adım Kurulum:</Run>
+                                <LineBreak/><LineBreak/>
+                                <Run FontWeight="Bold" Foreground="#FBBF24">📌 Adım 1:</Run> myaccount.google.com adresine gidin
+                                <LineBreak/>
+                                <Run FontWeight="Bold" Foreground="#FBBF24">📌 Adım 2:</Run> Sol menüden "Güvenlik" sekmesine tıklayın
+                                <LineBreak/>
+                                <Run FontWeight="Bold" Foreground="#FBBF24">📌 Adım 3:</Run> "2 adımlı doğrulama"yı etkinleştirin
+                                <LineBreak/>
+                                <Run FontWeight="Bold" Foreground="#FBBF24">📌 Adım 4:</Run> "App password" seçeneğine tıklayın
+                                <LineBreak/>
+                                <Run FontWeight="Bold" Foreground="#FBBF24">📌 Adım 5:</Run> Uygulama: "Posta", Cihaz: "Diğer" seçip oluşturun
+                                <LineBreak/>
+                                <Run FontWeight="Bold" Foreground="#FBBF24">📌 Adım 6:</Run> 16 haneli şifreyi uygulamaya yapıştırın
+                            </TextBlock>
+
+                            <Border Background="#1A1A1A" CornerRadius="5" Padding="15" Margin="0,15,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="⚠️ Önemli Notlar:" Foreground="#EF4444" FontWeight="Bold" Margin="0,0,0,10"/>
+                                    <TextBlock Text="• App Password sadece bir kez gösterilir" Foreground="#A0A0A0" FontSize="12"/>
+                                    <TextBlock Text="• Şifreyi hemen kaydedin" Foreground="#A0A0A0" FontSize="12" Margin="0,3,0,0"/>
+                                    <TextBlock Text="• 2 adımlı doğrulama açıkken çalışır" Foreground="#A0A0A0" FontSize="12" Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Button Content="{DynamicResource BtnClose}" Style="{StaticResource GhostButton}" HorizontalAlignment="Center" Margin="0,20,0,0" Padding="20,10" Click="CloseHelpOverlay_Click"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+
+            <!-- ================================================================
+                 HAKKINDA (ABOUT) OVERLAY — Sunum için ekip, versiyon, lisanslar
+                 ================================================================ -->
+            <Grid x:Name="AboutOverlay" Visibility="Collapsed" Background="#D9000000" Grid.RowSpan="4" Panel.ZIndex="100">
+                <Border Background="#1A1C1E" CornerRadius="12" BorderBrush="#444" BorderThickness="1"
+                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Padding="30" Width="640" MaxHeight="720">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+
+                            <!-- Başlık -->
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8" HorizontalAlignment="Center">
+                                <iconPacks:PackIconMaterial Kind="Shield" Foreground="#3B82F6" Width="32" Height="32" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                <TextBlock Text="Siber Mail &amp; Güvenlik Asistanı" Foreground="White" FontSize="24" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <TextBlock Text="Mail Güvenlik Asistanı · v1.0" Foreground="#A0A0A0" FontSize="13" HorizontalAlignment="Center" Margin="0,0,0,4"/>
+                            <TextBlock Text="Bitirme Projesi · 2026" Foreground="#707070" FontSize="11" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+                            <!-- Proje Açıklaması -->
+                            <Border Background="#23262A" CornerRadius="8" Padding="16" Margin="0,0,0,16">
+                                <TextBlock TextWrapping="Wrap" Foreground="#D0D0D0" FontSize="13" LineHeight="22"
+                                           Text="Gmail tabanlı kullanıcılar için phishing, spam, SQL Injection, XSS ve Trojan tespiti yapan yapay zeka destekli masaüstü güvenlik uygulaması. URL ve dosya ekleri VirusTotal entegrasyonuyla 70+ antivirüs motoru üzerinden taranır."/>
+                            </Border>
+
+                            <!-- Ekip -->
+                            <TextBlock Text="👥 Geliştirici Ekip" Foreground="#3B82F6" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12"/>
+
+                            <!-- Üye 1 — Proje Lideri -->
+                            <Border Background="#23262A" CornerRadius="8" Padding="16" Margin="0,0,0,10" BorderBrush="#3B82F6" BorderThickness="0,0,0,2">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="Rıdvan Gürdal" Foreground="White" FontSize="15" FontWeight="SemiBold"/>
+                                        <TextBlock Text="2024707045" Foreground="#707070" FontSize="11" Margin="0,2,0,4"/>
+                                        <TextBlock Text="Proje Lideri · Veri ve Yapay Zeka (AI) Geliştiricisi · Backend Developer" Foreground="#D0D0D0" FontSize="12" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                    <Border Grid.Column="1" Background="#3B82F6" CornerRadius="4" Padding="8,4" VerticalAlignment="Top">
+                                        <TextBlock Text="LİDER" Foreground="White" FontSize="10" FontWeight="Bold"/>
+                                    </Border>
+                                </Grid>
+                            </Border>
+
+                            <!-- Üye 2 -->
+                            <Border Background="#23262A" CornerRadius="8" Padding="16" Margin="0,0,0,10">
+                                <StackPanel>
+                                    <TextBlock Text="Deniz Şahin" Foreground="White" FontSize="15" FontWeight="SemiBold"/>
+                                    <TextBlock Text="2024707089" Foreground="#707070" FontSize="11" Margin="0,2,0,4"/>
+                                    <TextBlock Text="Veri ve Yapay Zeka (AI) Geliştiricisi · Backend Developer" Foreground="#D0D0D0" FontSize="12" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Üye 3 -->
+                            <Border Background="#23262A" CornerRadius="8" Padding="16" Margin="0,0,0,10">
+                                <StackPanel>
+                                    <TextBlock Text="Parsa Karami" Foreground="White" FontSize="15" FontWeight="SemiBold"/>
+                                    <TextBlock Text="2024707009" Foreground="#707070" FontSize="11" Margin="0,2,0,4"/>
+                                    <TextBlock Text="Arayüz (Frontend) Geliştiricisi" Foreground="#D0D0D0" FontSize="12" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Üye 4 -->
+                            <Border Background="#23262A" CornerRadius="8" Padding="16" Margin="0,0,0,16">
+                                <StackPanel>
+                                    <TextBlock Text="Yunus Emre Beker" Foreground="White" FontSize="15" FontWeight="SemiBold"/>
+                                    <TextBlock Text="2024707029" Foreground="#707070" FontSize="11" Margin="0,2,0,4"/>
+                                    <TextBlock Text="API ve Entegrasyon Sorumlusu" Foreground="#D0D0D0" FontSize="12" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Teknolojiler -->
+                            <TextBlock Text="🧰 Kullanılan Teknolojiler" Foreground="#3B82F6" FontSize="16" FontWeight="SemiBold" Margin="0,8,0,12"/>
+                            <Border Background="#23262A" CornerRadius="8" Padding="16" Margin="0,0,0,16">
+                                <TextBlock TextWrapping="Wrap" Foreground="#D0D0D0" FontSize="12" LineHeight="22">
+                                    <Run FontWeight="Bold" Foreground="#FBBF24">Frontend:</Run> WPF (.NET 8) · XAML · MahApps.Metro.IconPacks
+                                    <LineBreak/>
+                                    <Run FontWeight="Bold" Foreground="#FBBF24">Backend:</Run> C# 12 · MailKit · MimeKit · QuestPDF
+                                    <LineBreak/>
+                                    <Run FontWeight="Bold" Foreground="#FBBF24">Veritabanı:</Run> SQLite (Microsoft.Data.Sqlite)
+                                    <LineBreak/>
+                                    <Run FontWeight="Bold" Foreground="#FBBF24">Yapay Zeka:</Run> Python 3.10+ · Flask · scikit-learn · TF-IDF
+                                    <LineBreak/>
+                                    <Run FontWeight="Bold" Foreground="#FBBF24">Güvenlik:</Run> DPAPI · KVKK PII Maskeleme · Single Instance Mutex
+                                    <LineBreak/>
+                                    <Run FontWeight="Bold" Foreground="#FBBF24">Dış Servisler:</Run> VirusTotal Public API v3 · Gmail IMAP/SMTP
+                                </TextBlock>
+                            </Border>
+
+                            <!-- Lisanslar -->
+                            <TextBlock Text="📜 Üçüncü Parti Lisanslar" Foreground="#3B82F6" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                            <Border Background="#23262A" CornerRadius="8" Padding="16" Margin="0,0,0,16">
+                                <TextBlock TextWrapping="Wrap" Foreground="#A0A0A0" FontSize="11" LineHeight="20">
+                                    <Run Foreground="#D0D0D0">MailKit / MimeKit</Run> — MIT License (© Jeffrey Stedfast)
+                                    <LineBreak/>
+                                    <Run Foreground="#D0D0D0">QuestPDF</Run> — MIT (Community), QuestPDF License (Commercial)
+                                    <LineBreak/>
+                                    <Run Foreground="#D0D0D0">Microsoft.Data.Sqlite</Run> — MIT License (© Microsoft)
+                                    <LineBreak/>
+                                    <Run Foreground="#D0D0D0">MahApps.Metro.IconPacks</Run> — MIT License
+                                    <LineBreak/>
+                                    <Run Foreground="#D0D0D0">scikit-learn / Flask / numpy</Run> — BSD-3-Clause License
+                                    <LineBreak/>
+                                    <Run Foreground="#D0D0D0">VirusTotal API</Run> — Public API kullanım koşulları (virustotal.com)
+                                </TextBlock>
+                            </Border>
+
+                            <!-- KVKK Uyarısı -->
+                            <Border Background="#1A1A1A" CornerRadius="6" Padding="12" Margin="0,0,0,20" BorderBrush="#4ADE80" BorderThickness="0,0,3,0">
+                                <TextBlock TextWrapping="Wrap" Foreground="#D0D0D0" FontSize="11" LineHeight="18">
+                                    <Run FontWeight="Bold" Foreground="#4ADE80">🇹🇷 KVKK Uyumlu:</Run>
+                                    Mail içerikleri yalnızca lokal SQLite veritabanında saklanır, üçüncü taraflarla paylaşılmaz. Loglara yazılan tüm kişisel veriler (TC Kimlik, IBAN, kredi kartı, telefon, e-posta) otomatik olarak maskelenir.
+                                </TextBlock>
+                            </Border>
+
+                            <Button Content="Kapat" Style="{StaticResource GhostButton}" HorizontalAlignment="Center"
+                                    Margin="0,5,0,0" Padding="40,10" Click="CloseAboutOverlay_Click"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
         </Grid>
     </Border>
 </Window>

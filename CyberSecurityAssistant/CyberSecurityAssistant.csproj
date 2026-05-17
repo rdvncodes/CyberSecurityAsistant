@@ -2,16 +2,41 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net10.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
 	<UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="6.2.1" />
-    <PackageReference Include="QuestPDF" Version="2026.2.4" />
-  </ItemGroup>
+    <ItemGroup>
+  <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="6.2.1" />
+  <PackageReference Include="QuestPDF" Version="2026.2.4" />
+  <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.0" />
+  <PackageReference Include="MailKit" Version="4.3.0" />
+  <PackageReference Include="MimeKit" Version="4.3.0" />
+    </ItemGroup>
+
+    <!-- Flask servisi için gerekli dosyalar build çıktısına kopyalanır.
+         predict.exe (PyInstaller bundle) varsa öncelikli kullanılır → Python gerekmez.
+         Yoksa fallback predict.py + sistem Python interpreter'ı kullanılır.
+         Models klasörü her durumda lazım (model yükleme için). -->
+    <ItemGroup>
+      <None Update="appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="predict.exe" Condition="Exists('predict.exe')">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="predict.py">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="requirements.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Models\*.pkl">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
 
 </Project>
