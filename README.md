@@ -72,7 +72,7 @@ URL ve dosyaları VirusTotal ile analiz eder; tehlikeli mailleri otomatik karant
 ### Geliştirici Kurulumu
 
 ```bash
-git clone https://github.com/<KULLANICI>/CyberSecurityAssistant.git
+git clone https://github.com/rdvncodes/CyberSecurityAsistant
 cd CyberSecurityAssistant
 dotnet restore
 dotnet build
